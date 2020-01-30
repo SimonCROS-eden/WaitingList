@@ -1,10 +1,9 @@
 var http = require('http');
 var fs = require('fs');
-var exec = require('child_process').exec;
+var express = require('express');
 
 console.log('Demarrage...');
 
-var express = require('express');
 var app = express();
 app.use(express.static('../public'));
 
