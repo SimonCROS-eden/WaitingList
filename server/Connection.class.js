@@ -17,8 +17,8 @@ class Connection {
     }
 
     registerCommand(command, callback) {
-        this.getSocket().on(command, () => {
-            callback(this);
+        this.getSocket().on(command, (message) => {
+            callback(message, this);
         });
     }
 

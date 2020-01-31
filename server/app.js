@@ -19,8 +19,7 @@ const Connection = require('./Connection.class.js');
 // Quand un client se connecte, on le note dans la console
 io.sockets.on('connection', function(socket) {
     let newConnection = new Connection(socket);
-    newConnection.registerCommand("test", (connection) => {
-        console.log(1);
+    newConnection.registerCommand("test", (message, connection) => {
         connection.send("reponseTest", {content: "cucu"});
     });
 });
