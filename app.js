@@ -5,7 +5,7 @@ var express = require('express');
 console.log('Demarrage...');
 
 var app = express();
-app.use(express.static('../public'));
+app.use(express.static('/public'));
 
 // Chargement du fichier index.html affiché au client
 var server = http.createServer(app);
