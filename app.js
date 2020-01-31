@@ -5,7 +5,7 @@ var express = require('express');
 console.log('Demarrage...');
 
 var app = express();
-app.use(express.static('/public'));
+app.use(express.static('./public'));
 
 // Chargement du fichier index.html affiché au client
 var server = http.createServer(app);
@@ -14,7 +14,7 @@ var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 io.set('origins', '*:*');
 
-const Connection = require('./Connection.class.js');
+const Connection = require('./server/Connection.class.js');
 
 // Quand un client se connecte, on le note dans la console
 io.sockets.on('connection', function(socket) {
