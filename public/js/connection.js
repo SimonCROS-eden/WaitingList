@@ -1,4 +1,4 @@
-let socket = io.connect('localhost:4000');
+let socket = io.connect('localhost:82');
 
 socket.emit("test", {content: "culcul"});
 

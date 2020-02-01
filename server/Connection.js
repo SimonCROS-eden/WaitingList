@@ -1,4 +1,4 @@
-class Connection {
+export default class Connection {
 
     constructor(socket) {
         this.socket = socket;
@@ -38,5 +38,3 @@ class Connection {
         this.socket.broadcast.emit(command, message);
     }
 }
-
-module.exports = Connection;

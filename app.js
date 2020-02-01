@@ -1,29 +1,35 @@
-var http = require('http');
-var fs = require('fs');
-var express = require('express');
-
 console.log('Demarrage...');
 
-var app = express();
-app.use(express.static('./public'));
+import mysql from "mysql";
+import bcrypt from "bcryptjs";
 
-// Chargement du fichier index.html affiché au client
-var server = http.createServer(app);
+const config = {
+  "host": "localhost",
+  "user": "root",
+  "password": "",
+  "base": "waitinglist"
+};
 
-// Chargement de socket.io
-var io = require('socket.io').listen(server);
-io.set('origins', '*:*');
-
-const Connection = require('./server/Connection.class.js');
-
-// Quand un client se connecte, on le note dans la console
-io.sockets.on('connection', function(socket) {
-    let newConnection = new Connection(socket);
-    newConnection.registerCommand("test", (message, connection) => {
-        connection.send("reponseTest", {content: "cucu"});
-    });
+var db = mysql.createConnection({
+  host: config.host,
+  user: config.user,
+  password: config.password,
+  database: config.base
 });
 
-server.listen(4000, function() {
-    console.log('Serveur connecte sur le port 4000');
+db.connect(function (error) {
+  if (!!error)
+  throw error;
+
+  console.log('mysql connected to ' + config.host + ", user " + config.user + ", database " + config.base);
 });
+
+// -----------------------------------------------------------
+import WaitingList from "./server/WaitingList.js";
+new WaitingList();
+
+// bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
+//
+// })
+//     // Store hash in your password DB.
+// });
