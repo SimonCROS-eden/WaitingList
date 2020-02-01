@@ -10,10 +10,9 @@ export default class SocketServer extends Server {
         this.io = socket(this.server);
 
         let sessionMiddleware = session({
-          secret: "keyboard cat"
-        });
-        this.io.use(function (socket, next) {
-          sessionMiddleware(socket.request, socket.request.res, next);
+            secret: "WaitingList@2020",
+            resave: true,
+            saveUninitialized: true
         });
         this.app.use(sessionMiddleware);
     }
