@@ -17,8 +17,8 @@ export default class Connection {
     }
 
     registerCommand(command, callback) {
-        this.getSocket().on(command, (message) => {
-            callback(message, this);
+        this.getSocket().on(command, (data) => {
+            callback(data, this);
         });
     }
 
@@ -30,11 +30,11 @@ export default class Connection {
         });
     }
 
-    send(command, message) {
-        this.socket.emit(command, message);
+    send(command, data) {
+        this.socket.emit(command, data);
     }
 
-    broadcast(command, message) {
-        this.socket.broadcast.emit(command, message);
+    broadcast(command, data) {
+        this.socket.broadcast.emit(command, data);
     }
 }

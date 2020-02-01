@@ -1,22 +1,22 @@
 export default class UserManager {
 
-    getFirstName() {
-        return this.first_nameexport default ;
+    getUserByUsername(email) {
+        this.query("SELECT * FROM user WHERE user.email = :email GROUP BY role.id", ["email" => email]);
     }
 
-    getLastName() {
-        return this.last_name;
+    registerUser(user) {
+        this.insert("user", ["email" => user.getEmail(),
+            "email" => user.getUsername(),
+            "role_id" => user.getRole(),
+            "password" => user.getPassword()]);
+        return this.getUserByEmail(user.getEmail());
     }
 
-    getEmail() {
-        return this.email;
+    update(user) {
+        this.updateWhere("user", ["role_id" => user.getRole()], ["id" => user.getId()]);
     }
 
-    getStatus() {
-        return this.status;
-    }
-
-    getPassword() {
-        return this.password;
+    getUsers() {
+        return this.query("SELECT * FROM user");
     }
 }

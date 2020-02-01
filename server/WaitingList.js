@@ -1,4 +1,4 @@
-import Connection from "./Connection.js";
+import Connection from "./server/Connection.js";
 import SocketServer from "./server/SocketServer.js";
 
 export default class WaitingList {
@@ -12,11 +12,11 @@ export default class WaitingList {
 
         // Quand un client se connecte, on le note dans la console
         this.server.io.on('connection', function(socket) {
-            let newConnection = new Connection(socket);
-            newConnection.registerCommand("test", (message, connection) => {
+            let connection = new Connection(socket);
+            connection.registerCommand("test", (data, connection) => {
                 connection.send("reponseTest", {content: "cucu"});
             });
-            socket.on("login", function(data){
+            connection.registerCommand("login", (data, connection) => {
                 const user = data.user,
                 pass = data.pass;
                 db.query("SELECT * FROM user WHERE username=?", [user], function(err, rows, fields){
@@ -27,7 +27,7 @@ export default class WaitingList {
                     }
                 });
             });
-            socket.on("register", function(data){
+            connection.registerCommand("register", (data, connection) => {
                 const first_name = data.first,
                 last_name = data.last,
                 email = data.email,
