@@ -1,4 +1,4 @@
 export default class Command {
 
-    // on()
+    on(command, sender, data) {}
 }

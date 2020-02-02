@@ -16,9 +16,9 @@ export default class Connection {
         return this.socket;
     }
 
-    registerCommand(command, callback) {
+    registerCommand(command, clazz) {
         this.getSocket().on(command, (data) => {
-            callback(data, this);
+            clazz.on(command, this, data);
         });
     }
 

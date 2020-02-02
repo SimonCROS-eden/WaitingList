@@ -1,20 +1,23 @@
-$("#Login_Register").click(function() {
-    socket.emit("login_register", {
-        user: $("#userName").val(),
-        pass: $("#Password").val()
+$("#login").click(() => {
+    socket.emit("login", {
+        email: $("#lemail").val(),
+        password: $("#lpassword").val()
     });
 });
 
-socket.on("logged_in", function(name){
-  $("#n_log_in").hide();
-  $("#log_in").html("Welcome back " + name + ", nice to see you again!");
-  $("#log_in").show();
+$("#register").click(() => {
+    socket.emit("register", {
+        email: $("#remail").val(),
+        password: $("#rpassword").val()
+    });
 });
 
-socket.on("invalid", function(){
-  alert("Username / Password Invalid, Please try again!");
+socket.on("logged_in", (data) => {
+    $("#login-register").hide();
+    $("#log_in").html("Salut" + data.name + " !");
+    $("#log_in").show();
 });
 
-socket.on("error", function(){
-  alert("Error: Please try again!");
+socket.on("error", (data) =>{
+    alert(data.error);
 });

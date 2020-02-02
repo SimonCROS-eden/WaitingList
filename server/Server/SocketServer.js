@@ -1,8 +1,12 @@
 import socket from "socket.io";
 import session from "express-session";
-import Server from "./Server.js"
+import Server from "./Server.js";
+import Connection from "./Connection.js";
 
 export default class SocketServer extends Server {
+
+    commands = {};
+    connectionCallback = () => {};
 
     constructor(port) {
         super(port);
@@ -15,5 +19,21 @@ export default class SocketServer extends Server {
             saveUninitialized: true
         });
         this.app.use(sessionMiddleware);
+
+        this.io.on('connection', (socket) => {
+            let connection = new Connection(socket);
+
+            for (let [key, value] of Object.entries(this.commands)) {
+                connection.registerCommand(key, value);
+            }
+        });
+    }
+
+    registerCommand(command, clazz) {
+        this.commands[command] = clazz;
+    }
+
+    onConnection(callback) {
+        this.connectionCallback = callback;
     }
 }
