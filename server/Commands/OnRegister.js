@@ -1,19 +1,24 @@
 import Command from "./Command.js";
+import UserManager from "../Models/UserManager.js";
+import UserModel from "../Models/UserModel.js";
+import Status from "../Status.js";
 
 export default class OnRegister extends Command {
 
-    on(command, sender, data) {
-        const first_name = data.first,
+    async on(command, sender, data) {
+        let first_name = data.first,
         last_name = data.last,
         email = data.email,
-        pass = data.pass,
-        pass_repeat = data.pass_repeat;
-        db.query("SELECT * FROM user WHERE username=?", [user], function(err, rows, fields){
-            if (rows.length == 0) {
-                console.log("nothing here");
-            } else {
-                console.log("here");
-            }
-        });
+        password = data.password,
+        password_repeat = data.password_repeat;
+
+        if (password == password_repeat) {
+            let pass = await UserManager.hash(password);
+            let user = new UserModel(first_name, last_name, email, Status.DENY, pass);
+            let manager = new UserManager();
+            manager.registerUser(user, () => {
+                
+            });
+        }
     }
 }

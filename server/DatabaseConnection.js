@@ -16,6 +16,7 @@ export default class DatabaseConnection {
     connect(callback) {
         this.database.connect(function (error) {
             if (!!error) {
+                console.error("Impossible de se connecter à la base de donnée");
                 throw error;
             }
             callback();

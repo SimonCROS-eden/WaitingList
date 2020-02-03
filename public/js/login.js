@@ -1,23 +1,24 @@
 $("#login").click(() => {
     socket.emit("login", {
-        email: $("#lemail").val(),
-        password: $("#lpassword").val()
+        email: $("#l_email").val(),
+        password: $("#l_password").val()
     });
 });
 
 $("#register").click(() => {
     socket.emit("register", {
-        email: $("#remail").val(),
-        password: $("#rpassword").val()
+        first: $("#r_first").val(),
+        last: $("#r_last").val(),
+        email: $("#r_email").val(),
+        password: $("#r_password").val(),
+        password_repeat: $("#r_password_repeat").val()
     });
 });
 
 socket.on("logged_in", (data) => {
-    $("#login-register").hide();
-    $("#log_in").html("Salut" + data.name + " !");
-    $("#log_in").show();
+    console.log(data);
 });
 
 socket.on("error", (data) =>{
-    alert(data.error);
+    console.log(data);
 });

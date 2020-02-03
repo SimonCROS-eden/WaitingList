@@ -15,15 +15,20 @@ export default class Manager {
         return this.database;
     }
 
-    select(where, callback) {
-        connection.query('SELECT * FROM ' + this.table + ' WHERE ' + Object.keys(where).map(e => e + " = ?").join(" "), Object.values(where), (error, results) => {
-            if (error) throw error;
-            callback(results);
+    select(where) {
+        return new Promise((resolve, reject) => {
+            this.database.getDatabase().query('SELECT * FROM ' + this.table + ' WHERE ' + Object.keys(where).map(e => e + " = ?").join(" "), Object.values(where), (error, rows) => {
+                if (error) {
+                    reject(error);
+                    return;
+                }
+                resolve(rows);
+            });
         });
     }
 
-    insert(values) {
-        connection.query('INSERT INTO ' + this.table + ' (' + Object.keys(where).join(" ") + ") VALUES (" + Object.keys(where).map(e => "?").join(" ") + ")", Object.values(values), (error, results) => {
+    insert(values, callback) {
+        this.database.getDatabase().query('INSERT INTO ' + this.table + ' (' + Object.keys(values).join(", ") + ") VALUES (" + Object.keys(values).map(e => "?").join(", ") + ")", Object.values(values), (error, rows) => {
             if (error) throw error;
             callback();
         });

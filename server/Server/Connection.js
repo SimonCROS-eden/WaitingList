@@ -4,7 +4,6 @@ export default class Connection {
         this.socket = socket;
 
         var address = socket.request.connection.remoteAddress;
-        console.log('New connection from ' + address.split(":")[address.split(":").length - 1]);
         this.address = address;
     }
 
@@ -24,8 +23,6 @@ export default class Connection {
 
     onDisconnect(callback) {
         this.getSocket().on('disconnect', () => {
-            var address = socket.request.connection.remoteAddress;
-            console.log('Connection lost with ' + address.split(":")[address.split(":").length - 1]);
             callback(this);
         });
     }

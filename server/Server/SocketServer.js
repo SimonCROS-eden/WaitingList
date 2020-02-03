@@ -22,6 +22,7 @@ export default class SocketServer extends Server {
 
         this.io.on('connection', (socket) => {
             let connection = new Connection(socket);
+            this.connectionCallback(connection);
 
             for (let [key, value] of Object.entries(this.commands)) {
                 connection.registerCommand(key, value);
