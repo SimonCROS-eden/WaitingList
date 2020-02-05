@@ -40,7 +40,7 @@ let e = new Echo({
     host: window.location.hostname + ':6001'
 });
 
-e.channel("waitinglist_database_test").listen("TestEvent", (data) => {
+e.channel("test").listen("TestEvent", (data) => {
     console.log(data);
 });
 
