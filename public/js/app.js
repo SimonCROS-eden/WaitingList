@@ -50808,7 +50808,7 @@ var e = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'socket.io',
   host: window.location.hostname + ':6001'
 });
-e.channel("test").listen("TestEvent", function (data) {
+e.channel("waitinglist_database_test").listen("TestEvent", function (data) {
   console.log(data);
 });
 $('#test').click(function (evt) {
