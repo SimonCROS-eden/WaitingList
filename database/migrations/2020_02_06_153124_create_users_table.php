@@ -20,9 +20,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
-            $table->integer('nbAsk')->unsigned();
-            $table->integer('scoreHelp');
-            $table->boolean('admin');
+            $table->integer('nbAsk')->default(0)->unsigned();
+            $table->integer('scoreHelp')->default(0);
+            $table->boolean('admin')->default(false);
             $table->timestamps();
         });
     }
