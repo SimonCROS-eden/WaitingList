@@ -17,7 +17,7 @@ class TestController extends Controller
         $this->middleware('auth');
     }
 
-    public function index($id, $title, $user, $description = "") {
+    public function index($id, $user, $title, $description = "") {
         $event = new TestEvent([[
             "id" => $id,
             "title" => $title,

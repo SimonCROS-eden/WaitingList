@@ -44,11 +44,12 @@ let section = $("#tickets");
 e.channel("waitinglist_database_test").listen("TestEvent", (data) => {
     for (let ticket of data.post) {
         let div = $("<div></div>");
-        div.data("id", ticket.id);
+        div.append("<hr />");
+        div.attr("data-id", ticket.id);
         {
-            let username = $("<p></p>");
-            username.text(ticket.username);
-            div.append(username);
+            let user = $("<p></p>");
+            user.text(ticket.user);
+            div.append(user);
         }
         {
             let title = $("<h2></h2>");
@@ -60,7 +61,19 @@ e.channel("waitinglist_database_test").listen("TestEvent", (data) => {
             description.text(ticket.description);
             div.append(description);
         }
-        section.append(div);
+        {
+            let take = $("<button>/button>");
+            take.text("Prendre");
+            div.append(take);
+        }
+
+        let old = section.find('[data-id="'+ticket.id+'"]');
+        
+        if (old.length) {
+            old.replaceWith(div);
+        } else {
+            section.prepend(div);
+        }
     }
 });
 
