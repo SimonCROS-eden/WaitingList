@@ -13,14 +13,8 @@
 
 Auth::routes();
 
-var_dump(Auth::check());
-
-if (Auth::check()) {
-    Route::ressource('/', 'TicketController@index')->name('dashboard');
-} else {
-    Route::get('/', 'HomeController@index')->name('home');
-}
-
+Route::get('/', 'TicketController@index')->name('dashboard');
+Route::resource('ticket', 'TicketController')->except(['index'])->middleware('auth');
 
 
 
