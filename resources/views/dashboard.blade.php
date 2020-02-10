@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    @auth
-        <button id="test">Notifier</button>
-    @endauth
+    <button id="test">Notifier</button>
+    <p>T'es sur le dashboard</p>
+
 </div>
 @endsection
