@@ -17,10 +17,11 @@ class TestController extends Controller
         $this->middleware('auth');
     }
 
-    public function index($title, $description = "") {
+    public function index($id, $title, $user, $description = "") {
         $event = new TestEvent([[
-            "id" => 1,
+            "id" => $id,
             "title" => $title,
+            "user" => $user,
             "description" => $description
         ]]);
         broadcast($event)->toOthers();

@@ -44,6 +44,12 @@ let section = $("#tickets");
 e.channel("waitinglist_database_test").listen("TestEvent", (data) => {
     for (let ticket of data.post) {
         let div = $("<div></div>");
+        div.data("id", ticket.id);
+        {
+            let username = $("<p></p>");
+            username.text(ticket.username);
+            div.append(username);
+        }
         {
             let title = $("<h2></h2>");
             title.text(ticket.title);
