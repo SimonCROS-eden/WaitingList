@@ -11,12 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+var_dump(Auth::check());
+
+if (Auth::check()) {
+    Route::ressource('/', 'TicketController@index')->name('dashboard');
+} else {
+    Route::get('/', 'HomeController@index')->name('home');
+}
+
+
+
 
 Route::get('/test', 'TestController@index')->name('test');
