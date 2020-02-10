@@ -77,6 +77,13 @@
         </nav>
 
         <main class="py-4">
+            @auth
+                <ul>
+                    @foreach ($users as $user)
+                        <li>{{ $user->last_name }}</li>
+                    @endforeach
+                </ul>
+            @endauth
             @yield('content')
         </main>
     </div>
