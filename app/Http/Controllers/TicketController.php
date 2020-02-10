@@ -21,8 +21,7 @@ class TicketController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $users = User::get();
-            return view('dashboard', ["users" => $users]);
+            return view('dashboard');
         }
 
         return view('home');
