@@ -50,6 +50,9 @@
                                 </li>
                             @endif
                         @else
+                            <li>
+                                <a href="/ticket/create">Create</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->first_name. " ". Auth::user()->last_name }} <span class="caret"></span>
@@ -74,6 +77,13 @@
         </nav>
 
         <main class="py-4">
+            @auth
+                <ul>
+                    @foreach ($users as $user)
+                        <li>{{ $user->last_name }}</li>
+                    @endforeach
+                </ul>
+            @endauth
             @yield('content')
         </main>
     </div>

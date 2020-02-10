@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Ticket;
+use App\User;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\StoreTicket;
+
 
 class TicketController extends Controller
 {
@@ -28,7 +34,7 @@ class TicketController extends Controller
      */
     public function create()
     {
-        //
+        return view('ticket/create');
     }
 
     /**
@@ -37,9 +43,14 @@ class TicketController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTicket $request)
     {
-        //
+
+        $validated = $request->validated();
+
+        Ticket::create($validated);
+
+        return redirect('/');
     }
 
     /**
