@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Ticket;
+use App\User;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreTicket;
 
@@ -20,7 +21,8 @@ class TicketController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            return view('dashboard');
+            $users = User::get();
+            return view('dashboard', ["users" => $users]);
         }
 
         return view('home');
