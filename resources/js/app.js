@@ -40,8 +40,22 @@ let e = new Echo({
     host: window.location.hostname + ':6001'
 });
 
+let section = $("#tickets");
 e.channel("waitinglist_database_test").listen("TestEvent", (data) => {
-    console.log(data.post);
+    for (let ticket of data.post) {
+        let div = $("<div></div>");
+        {
+            let title = $("<h2></h2>");
+            title.text(ticket.title);
+            div.append(title);
+        }
+        {
+            let description = $("<pre></pre>");
+            description.text(ticket.description);
+            div.append(description);
+        }
+        section.append(div);
+    }
 });
 
 $('#test').click((evt) => {
