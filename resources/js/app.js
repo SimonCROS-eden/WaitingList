@@ -41,7 +41,7 @@ let e = new Echo({
 });
 
 e.channel("waitinglist_database_test").listen("TestEvent", (data) => {
-    console.log(data);
+    console.log(data.post);
 });
 
 $('#test').click((evt) => {
