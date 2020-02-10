@@ -11,12 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'TicketController@index')->name('dashboard');
+Route::resource('ticket', 'TicketController')->except(['index'])->middleware('auth');
+
+
 
 Route::get('/test', 'TestController@index')->name('test');
