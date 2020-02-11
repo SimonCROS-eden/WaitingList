@@ -22,8 +22,7 @@ class TicketController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $tickets = Ticket::all();
-            return view('dashboard', []);
+            return view('dashboard');
         }
 
         return view('home');
