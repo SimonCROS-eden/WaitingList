@@ -53,7 +53,7 @@ class TicketPolicy
      */
     public function update(User $user, Ticket $ticket)
     {
-        return $user->id === $ticket->ask_id;
+        return $user === $ticket->asker() || $user->isAdmin();
     }
 
     /**
@@ -65,7 +65,7 @@ class TicketPolicy
      */
     public function delete(User $user, Ticket $ticket)
     {
-        return $user->id === $ticket->ask_id;
+        return $user->id === $ticket->ask_id || $user->isAdmin();
     }
 
     /**
