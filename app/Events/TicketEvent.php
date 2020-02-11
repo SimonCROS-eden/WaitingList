@@ -21,7 +21,7 @@ class TicketEvent implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(array $update)
+    public function __construct($update)
     {
         foreach ($update as $ticket) {
             $this->update[] = [

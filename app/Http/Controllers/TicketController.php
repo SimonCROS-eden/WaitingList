@@ -104,4 +104,8 @@ class TicketController extends Controller
     {
         //
     }
+
+    public function connect() {
+        event(new TicketEvent(Ticket::all()));
+    }
 }

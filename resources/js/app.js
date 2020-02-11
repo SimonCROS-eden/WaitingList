@@ -40,10 +40,9 @@ window.Echo = new Echo({
     host: window.location.hostname + ':6001'
 });
 
-
-
 let section = $("#tickets");
-Echo.channel("waitinglist_database_ticket").listen("TicketEvent", (data) => {    
+window.Echo.channel("waitinglist_database_ticket")
+.listen("TicketEvent", (data) => {    
     for (let ticket of data.update) {
         let div = $("<div></div>");
         div.append("<hr />");
@@ -78,3 +77,5 @@ Echo.channel("waitinglist_database_ticket").listen("TicketEvent", (data) => {
         }
     }
 });
+
+$.get("/connect");
