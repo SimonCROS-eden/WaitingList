@@ -9,13 +9,14 @@
         <p>{{ $ticket->desc }}</p>
 
         @if ($ticket->asker == Auth::user() || Auth::user()->isAdmin())
+            <a href="/ticket/{{$ticket->id}}/edit"><button type="button">Edit</button></a>
+        
             <form action="{{ $ticket->id }}" method="post">
                 {{ method_field('DELETE') }}
                 @csrf
                 <button type="submit">
                     Supprimer
                 </button>
-
             </form>
         @endif
     @endauth
