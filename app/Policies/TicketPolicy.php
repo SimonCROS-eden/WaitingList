@@ -68,6 +68,16 @@ class TicketPolicy
         return $user->id === $ticket->ask_id || $user->isAdmin();
     }
 
+    public function updateTake(User $user, Ticket $ticket)
+    {
+        return $user->id === $ticket->help_id || $user->isAdmin();
+    }
+
+    public function updateTakeMaker(User $user, Ticket $ticket)
+    {
+        return $user->id === $ticket->ask_id;
+    }
+
     /**
      * Determine whether the user can restore the ticket.
      *

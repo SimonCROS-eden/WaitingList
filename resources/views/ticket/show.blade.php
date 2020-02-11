@@ -12,13 +12,39 @@
             <a href="/ticket/{{$ticket->id}}/edit"><button type="button">Edit</button></a>
         
             <form action="{{ $ticket->id }}" method="post">
-                {{ method_field('DELETE') }}
                 @csrf
+                @method("DELETE")
                 <button type="submit">
                     Supprimer
                 </button>
             </form>
         @endif
+
+        <form action="/ticket/{{ $ticket->id }}/take" method="post">
+                @csrf
+                @method("PUT")
+                @unless($ticket->helper)
+                    <button type="submit" >
+                        @can('updateTakeMaker', $ticket)
+                            Pause
+                        @else
+                            Prendre
+                        @endcan
+                    </button>
+                @else
+                    @can('updateTake', $ticket)
+                        <button type="submit">
+                            @can('updateTakeMaker', $ticket)
+                                Continue
+                            @else
+                                Abandonner
+                            @endcan
+                        </button>
+                    @else
+                        Pris par : {{$ticket->helper->last_name}} {{$ticket->helper->first_name}}
+                    @endcan
+                @endunless
+            </form>
     @endauth
 </div>
 @endsection

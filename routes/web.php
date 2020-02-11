@@ -15,4 +15,5 @@ Auth::routes();
 
 Route::get('/', 'TicketController@index')->name('dashboard');
 Route::get('/connect', 'TicketController@connect')->name('connect');
+Route::put('/ticket/{ticket}/take', 'TicketController@updateTake')->name('updateTake');
 Route::resource('ticket', 'TicketController')->except(['index'])->middleware('auth');

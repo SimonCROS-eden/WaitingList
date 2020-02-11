@@ -22,7 +22,8 @@ class TicketController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            return view('dashboard');
+            $tickets = Ticket::all();
+            return view('dashboard', []);
         }
 
         return view('home');
@@ -101,6 +102,23 @@ class TicketController extends Controller
 
         return redirect('/');
     }
+
+
+    public function updateTake(Request $request, Ticket $ticket)
+    {
+
+        if ($ticket->hasHelper() && Auth::user()->can('updateTake', $ticket)) {
+            $ticket->helper()->dissociate();
+            $ticket->save();
+        } else {
+            $ticket->helper()->associate(Auth::user());
+            $ticket->save();
+        }
+
+        return redirect('/');
+    }
+
+    
 
     /**
      * Remove the specified resource from storage.
