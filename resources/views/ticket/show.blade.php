@@ -7,6 +7,17 @@
         <p>{{ $ticket->asker->first_name }} {{ $ticket->asker->last_name }}</p>
         <h2>{{ $ticket->name }}</h2>
         <p>{{ $ticket->desc }}</p>
+
+        @if ($ticket->ask_id == Auth::user()->id)
+            <form action="{{ $ticket->id }}" method="post">
+                {{ method_field('DELETE') }}
+                @csrf
+                <button type="submit">
+                    Supprimer
+                </button>
+
+            </form>
+        @endif
     @endauth
 </div>
 @endsection
