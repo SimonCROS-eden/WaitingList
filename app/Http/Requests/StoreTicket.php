@@ -25,8 +25,7 @@ class StoreTicket extends FormRequest
     {
         return [
             'title' => 'required|min:2|max:255',
-            'desc' => 'required|min:2|max:255',
-            'ask_id' => 'required|int'
+            'desc' => 'max:8000'
         ];
     }
 }

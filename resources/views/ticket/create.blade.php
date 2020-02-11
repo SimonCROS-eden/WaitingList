@@ -14,8 +14,6 @@
                 </span>
             @enderror
 
-            <input id="ask_id" type="hidden" value="{{ Auth::user()->id }}" class="form-control @error('ask_id') is-invalid @enderror" name="ask_id" required>
-
             <textarea id="desc" name="desc" class="form-control @error('desc') is-invalid @enderror" rows="5" cols="33" placeholder="Description">{{ old('desc') }}</textarea>
             @error('desc')
                 <span class="invalid-feedback" role="alert">
