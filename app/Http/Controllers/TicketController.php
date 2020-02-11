@@ -54,7 +54,6 @@ class TicketController extends Controller
         $ticket->asker()->associate(Auth::user());
         $ticket->save();
 
-
         return redirect('/');
     }
 
