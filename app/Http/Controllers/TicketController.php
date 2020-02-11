@@ -45,7 +45,6 @@ class TicketController extends Controller
      */
     public function store(StoreTicket $request)
     {
-
         $validated = $request->validated();
 
         $ticket = new Ticket;
@@ -75,7 +74,8 @@ class TicketController extends Controller
      */
     public function edit(Ticket $ticket)
     {
-        //
+        $this->authorize('update', $ticket);
+        return view('ticket/edit', ["ticket" => $ticket]);
     }
 
     /**
@@ -85,12 +85,15 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ticket $ticket)
+    public function update(StoreTicket $request, Ticket $ticket)
     {
+        $this->authorize('update', $ticket);
         $validated = $request->validated();
 
         $ticket->fill($validated);
         $ticket->save();
+
+        return redirect('/');
     }
 
     /**
@@ -99,8 +102,8 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Ticket $ticket)
     {
-        //
+        $this->authorize('delete', $ticket);
     }
 }
