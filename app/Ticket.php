@@ -16,4 +16,9 @@ class Ticket extends Model
     protected $fillable = [
         'name', 'desc', 'ask_id'
     ];
+
+    public function asker()
+    {
+        return $this->belongsTo('App\User', 'ask_id')
+    }
 }
