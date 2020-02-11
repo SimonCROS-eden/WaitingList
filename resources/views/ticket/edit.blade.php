@@ -9,8 +9,8 @@
         <form method="POST" action="/ticket/{{$ticket->id}}">
             @csrf
             {{method_field('PATCH')}}
-            <input id="name" type="text" value="{{ old('name') ? old('name') : $ticket->name }}" class="form-control @error('name') is-invalid @enderror" name="name" required autocomplete="name" placeholder="Titre ticket">
-            @error('name')
+            <input id="title" type="text" value="{{ old('title') ? old('title') : $ticket->title }}" class="form-control @error('title') is-invalid @enderror" name="title" required autocomplete="title" placeholder="Titre ticket">
+            @error('title')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>

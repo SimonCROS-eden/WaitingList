@@ -53,7 +53,7 @@ class TicketPolicy
      */
     public function update(User $user, Ticket $ticket)
     {
-        return $user === $ticket->asker() || $user->isAdmin();
+        return $user->id === $ticket->ask_id || $user->isAdmin();
     }
 
     /**
