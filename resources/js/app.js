@@ -35,16 +35,59 @@ require('./bootstrap');
 
 import Echo from 'laravel-echo';
 
-let e = new Echo({
+window.Echo = new Echo({
     broadcaster: 'socket.io',
     host: window.location.hostname + ':6001'
 });
 
-e.channel("waitinglist_database_test").listen("TestEvent", (data) => {
-    console.log(data);
+let section = $("#tickets");
+window.Echo.channel("waitinglist_database_ticket")
+.listen("TicketEvent", (data) => {    
+    for (let ticket of data.update) {
+        let div = $("<div></div>");
+        div.append("<hr />");
+        div.attr("data-id", ticket.id);
+        {
+            let user = $("<p></p>");
+            user.text(ticket.user);
+            div.append(user);
+        }
+        {
+            let title = $("<h2></h2>");
+            {
+                let a = $("<a></a>");
+                a.attr('href', "/ticket/" + ticket.id + "/");
+                a.text(ticket.title);
+                title.append(a);
+            }
+            div.append(title);
+        }
+        {
+            let description = $("<pre></pre>");
+            description.text(ticket.description);
+            div.append(description);
+        }
+        {
+            let take = $("<button>/button>");
+            take.text("Prendre");
+            div.append(take);
+        }
+
+        let old = section.find('[data-id="'+ticket.id+'"]');
+        
+        if (old.length) {
+            old.replaceWith(div);
+        } else {
+            section.prepend(div);
+        }
+    }
+    for (let ticket of data.remove) {
+        let old = section.find('[data-id="'+ticket.id+'"]');
+        
+        if (old.length) {
+            old.remove();
+        }
+    }
 });
 
-$('#test').click((evt) => {
-    evt.preventDefault();
-    $.get('/test');
-})
+$.get("/connect");

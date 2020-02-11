@@ -10,20 +10,33 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TestEvent implements ShouldBroadcast
+class TicketEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $post;
+    public $update = [];
+    public $remove = [];
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(array $post)
+    public function __construct($update, $remove = [])
     {
-        $this->post = $post;
+        foreach ($update as $ticket) {
+            $this->update[] = [
+                "id" => $ticket->id,
+                "title" => $ticket->title,
+                "user" => $ticket->asker->first_name . " " . $ticket->asker->last_name,
+                "description" => $ticket->desc
+            ];
+        }
+        foreach ($remove as $ticket) {
+            $this->remove[] = [
+                "id" => $ticket->id
+            ];
+        }
     }
 
     /**
@@ -33,6 +46,6 @@ class TestEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('test');
+        return new Channel('ticket');
     }
 }
