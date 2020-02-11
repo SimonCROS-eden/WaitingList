@@ -35,13 +35,15 @@ require('./bootstrap');
 
 import Echo from 'laravel-echo';
 
-let e = new Echo({
+window.Echo = new Echo({
     broadcaster: 'socket.io',
     host: window.location.hostname + ':6001'
 });
 
+
+
 let section = $("#tickets");
-e.channel("waitinglist_database_ticket").listen("TicketEvent", (data) => {    
+Echo.channel("waitinglist_database_ticket").listen("TicketEvent", (data) => {    
     for (let ticket of data.update) {
         let div = $("<div></div>");
         div.append("<hr />");
@@ -76,8 +78,3 @@ e.channel("waitinglist_database_ticket").listen("TicketEvent", (data) => {
         }
     }
 });
-
-$('#test').click((evt) => {
-    evt.preventDefault();
-    $.get('/test');
-})
