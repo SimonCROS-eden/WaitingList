@@ -8,7 +8,7 @@
         <h2>{{ $ticket->name }}</h2>
         <p>{{ $ticket->desc }}</p>
 
-        @if ($ticket->ask_id == Auth::user()->id)
+        @if ($ticket->asker == Auth::user() || Auth::user()->isAdmin())
             <form action="{{ $ticket->id }}" method="post">
                 {{ method_field('DELETE') }}
                 @csrf
