@@ -53,8 +53,7 @@ class TicketController extends Controller
         $ticket->asker()->associate(Auth::user());
         $ticket->save();
 
-        $event = new TicketEvent([$ticket]);
-        broadcast($event)->toOthers();
+        broadcast(new TicketEvent([$ticket]))->toOthers();
 
         return redirect('/');
     }
@@ -79,6 +78,7 @@ class TicketController extends Controller
     public function edit(Ticket $ticket)
     {
         $this->authorize('update', $ticket);
+
         return view('ticket/edit', ["ticket" => $ticket]);
     }
 
@@ -97,6 +97,8 @@ class TicketController extends Controller
         $ticket->fill($validated);
         $ticket->save();
 
+        broadcast(new TicketEvent([$ticket]))->toOthers();
+
         return redirect('/');
     }
 
@@ -109,6 +111,9 @@ class TicketController extends Controller
     public function destroy(Ticket $ticket)
     {
         $this->authorize('delete', $ticket);
+
+        broadcast(new TicketEvent([], [$ticket]))->toOthers();
+
         $ticket->delete();
 
         return redirect('/');

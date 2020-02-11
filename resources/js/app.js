@@ -54,7 +54,12 @@ window.Echo.channel("waitinglist_database_ticket")
         }
         {
             let title = $("<h2></h2>");
-            title.text(ticket.title);
+            {
+                let a = $("<a></a>");
+                a.attr('href', "/ticket/" + ticket.id + "/");
+                a.text(ticket.title);
+                title.append(a);
+            }
             div.append(title);
         }
         {
@@ -74,6 +79,13 @@ window.Echo.channel("waitinglist_database_ticket")
             old.replaceWith(div);
         } else {
             section.prepend(div);
+        }
+    }
+    for (let ticket of data.remove) {
+        let old = section.find('[data-id="'+ticket.id+'"]');
+        
+        if (old.length) {
+            old.remove();
         }
     }
 });
