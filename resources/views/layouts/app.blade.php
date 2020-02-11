@@ -80,7 +80,16 @@
             @auth
                 <ul>
                     @foreach ($users as $user)
-                        <li>{{ $user->last_name }}</li>
+                        <li>
+                            <p>
+                                {{ $user->getFullName() }}
+                                <span>{{ $user->scoreHelp }}</span>
+
+                                @if (Auth::user()->isAdmin())
+                                    <span>{{ $user->nbAsk }}</span>
+                                @endif
+                            </p>
+                        </li>
                     @endforeach
                 </ul>
             @endauth
