@@ -9,6 +9,7 @@ use App\Ticket;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreTicket;
+use App\Events\TicketEvent;
 
 
 class TicketController extends Controller
@@ -45,13 +46,14 @@ class TicketController extends Controller
      */
     public function store(StoreTicket $request)
     {
-
         $validated = $request->validated();
 
         $ticket = new Ticket;
         $ticket->fill($validated);
         $ticket->asker()->associate(Auth::user());
         $ticket->save();
+
+        broadcast(new TicketEvent([$ticket]))->toOthers();
 
         return redirect('/');
     }
@@ -75,7 +77,9 @@ class TicketController extends Controller
      */
     public function edit(Ticket $ticket)
     {
-        //
+        $this->authorize('update', $ticket);
+
+        return view('ticket/edit', ["ticket" => $ticket]);
     }
 
     /**
@@ -85,12 +89,17 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ticket $ticket)
+    public function update(StoreTicket $request, Ticket $ticket)
     {
+        $this->authorize('update', $ticket);
         $validated = $request->validated();
 
         $ticket->fill($validated);
         $ticket->save();
+
+        broadcast(new TicketEvent([$ticket]))->toOthers();
+
+        return redirect('/');
     }
 
     /**
@@ -99,8 +108,18 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Ticket $ticket)
     {
-        //
+        $this->authorize('delete', $ticket);
+
+        broadcast(new TicketEvent([], [$ticket]))->toOthers();
+
+        $ticket->delete();
+
+        return redirect('/');
+    }
+
+    public function connect() {
+        event(new TicketEvent(Ticket::all()));
     }
 }

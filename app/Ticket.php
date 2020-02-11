@@ -14,7 +14,7 @@ class Ticket extends Model
     protected $table = 'ticket';
 
     protected $fillable = [
-        'name', 'desc'
+        'title', 'desc'
     ];
 
     public function asker()
