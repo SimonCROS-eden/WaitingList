@@ -48,7 +48,10 @@ class TicketController extends Controller
 
         $validated = $request->validated();
 
-        Ticket::create($validated);
+        $ticket = new Ticket;
+        $ticket->fill($validated);
+        $ticket->asker()->associate(Auth::user());
+        $ticket->save();
 
         return redirect('/');
     }
