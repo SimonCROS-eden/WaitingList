@@ -9,6 +9,7 @@ use App\Ticket;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreTicket;
+use App\Events\TicketEvent;
 
 
 class TicketController extends Controller
@@ -46,13 +47,15 @@ class TicketController extends Controller
      */
     public function store(StoreTicket $request)
     {
-
         $validated = $request->validated();
 
         $ticket = new Ticket;
         $ticket->fill($validated);
         $ticket->asker()->associate(Auth::user());
         $ticket->save();
+
+        $event = new TicketEvent([$ticket]);
+        broadcast($event)->toOthers();
 
         return redirect('/');
     }

@@ -41,8 +41,8 @@ let e = new Echo({
 });
 
 let section = $("#tickets");
-e.channel("waitinglist_database_test").listen("TestEvent", (data) => {
-    for (let ticket of data.post) {
+e.channel("waitinglist_database_ticket").listen("TicketEvent", (data) => {    
+    for (let ticket of data.update) {
         let div = $("<div></div>");
         div.append("<hr />");
         div.attr("data-id", ticket.id);

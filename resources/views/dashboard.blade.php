@@ -12,7 +12,7 @@
     <hr/>
     <hr/>
     @foreach($tickets as $ticket)
-        <a href="/ticket/{{ $ticket->id }}"><p>{{ $ticket->name }}</p></a>
+        <a href="/ticket/{{ $ticket->id }}"><p>{{ $ticket->title }}</p></a>
     @endforeach
 </div>
 @endsection
