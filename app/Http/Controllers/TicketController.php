@@ -22,7 +22,8 @@ class TicketController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            return view('dashboard');
+            $tickets = Ticket::with('asker')->orderBy('created_at', 'desc')->get();
+            return view('dashboard', ["tickets" => $tickets]);
         }
 
         return view('home');
@@ -55,7 +56,7 @@ class TicketController extends Controller
 
         broadcast(new TicketEvent([$ticket]))->toOthers();
 
-        return redirect('/');
+        return redirect('/ticket/create');
     }
 
     /**
@@ -117,9 +118,5 @@ class TicketController extends Controller
         $ticket->delete();
 
         return redirect('/');
-    }
-
-    public function connect() {
-        event(new TicketEvent(Ticket::all()));
     }
 }
