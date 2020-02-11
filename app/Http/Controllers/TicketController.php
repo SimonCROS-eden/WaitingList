@@ -48,7 +48,10 @@ class TicketController extends Controller
 
         $validated = $request->validated();
 
-        Ticket::create($validated);
+        $ticket = new Ticket;
+        $ticket->fill($validated);
+        $ticket->asker()->associate(Auth::user());
+        $ticket->save();
 
         return redirect('/');
     }
@@ -59,9 +62,9 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Ticket $ticket)
     {
-        //
+        return view('ticket/show', ["ticket" => $ticket]);
     }
 
     /**
@@ -70,7 +73,7 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Ticket $ticket)
     {
         //
     }
@@ -82,9 +85,12 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Ticket $ticket)
     {
-        //
+        $validated = $request->validated();
+
+        $ticket->fill($validated);
+        $ticket->save();
     }
 
     /**
