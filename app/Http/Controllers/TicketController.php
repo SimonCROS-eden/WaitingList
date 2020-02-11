@@ -22,8 +22,7 @@ class TicketController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $tickets = Ticket::all();
-            return view('dashboard', ['tickets' => $tickets]);
+            return view('dashboard');
         }
 
         return view('home');
@@ -66,9 +65,9 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Ticket $ticket)
     {
-        //
+        return view('ticket/show', ["ticket" => $ticket]);
     }
 
     /**
@@ -77,9 +76,10 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Ticket $ticket)
     {
-        //
+        $this->authorize('update', $ticket);
+        return view('ticket/edit', ["ticket" => $ticket]);
     }
 
     /**
@@ -89,9 +89,15 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreTicket $request, Ticket $ticket)
     {
-        //
+        $this->authorize('update', $ticket);
+        $validated = $request->validated();
+
+        $ticket->fill($validated);
+        $ticket->save();
+
+        return redirect('/');
     }
 
     /**
@@ -100,9 +106,12 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Ticket $ticket)
     {
-        //
+        $this->authorize('delete', $ticket);
+        $ticket->delete();
+
+        return redirect('/');
     }
 
     public function connect() {
