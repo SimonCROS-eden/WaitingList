@@ -14,6 +14,11 @@ class Ticket extends Model
     protected $table = 'ticket';
 
     protected $fillable = [
-        'title', 'desc', 'user_id'
+        'title', 'desc'
     ];
+
+    public function asker()
+    {
+        return $this->belongsTo('App\User', 'ask_id');
+    }
 }

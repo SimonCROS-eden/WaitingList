@@ -8,5 +8,11 @@
     <section id="tickets">
 
     </section>
+    <hr/>
+    <hr/>
+    <hr/>
+    @foreach($tickets as $ticket)
+        <a href="/ticket/{{ $ticket->id }}"><p>{{ $ticket->name }}</p></a>
+    @endforeach
 </div>
 @endsection
