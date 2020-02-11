@@ -17,7 +17,7 @@ class CreateTicketTable extends Migration
             $table->bigIncrements('id');
             $table->biginteger('help_id')->nullable()->unsigned();
             $table->biginteger('ask_id')->unsigned();
-            $table->string('name');
+            $table->string('title');
             $table->text('desc')->nullable();
             $table->timestamps();
 

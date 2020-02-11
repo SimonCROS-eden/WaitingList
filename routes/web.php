@@ -16,6 +16,4 @@ Auth::routes();
 Route::get('/', 'TicketController@index')->name('dashboard');
 Route::resource('ticket', 'TicketController')->except(['index'])->middleware('auth');
 
-
-
 Route::get('/test', 'TestController@index')->name('test');
