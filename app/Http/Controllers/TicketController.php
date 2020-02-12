@@ -119,4 +119,21 @@ class TicketController extends Controller
 
         return redirect('/');
     }
+
+    public function data() {
+        $update = [];
+        foreach (Ticket::all() as $ticket) {
+            $update[] = [
+                "id" => $ticket->id,
+                "title" => $ticket->title,
+                "desc" => $ticket->desc,
+                "asker" => [
+                    "first_name" => $ticket->asker->first_name,
+                    "last_name" => $ticket->asker->last_name,
+                ]
+            ];
+        }
+        header('Content-Type: application/json');
+        echo json_encode($update);
+    }
 }

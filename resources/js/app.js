@@ -35,8 +35,7 @@ const app = new Vue({
             console.log('ok');
         },
         addTicket(data) {
-            console.log(data)
-            // this.$refs.tickets.appendChild(<ticket ticket="data.ticket" asker="data.asker"></ticket>)
+            
         }
     }
 });
@@ -44,6 +43,7 @@ const app = new Vue({
 require('./bootstrap');
 
 import Echo from 'laravel-echo';
+import Axios from 'axios';
 
 window.Echo = new Echo({
     broadcaster: 'socket.io',
@@ -99,4 +99,8 @@ window.Echo.channel("waitinglist_database_ticket")
     //         old.remove();
     //     }
     // }
+});
+
+axios.post("/data", {}).then(function (response) {
+    app.tickets = response.data;
 });

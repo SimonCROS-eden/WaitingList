@@ -26,14 +26,12 @@ class TicketEvent implements ShouldBroadcast
     {
         foreach ($update as $ticket) {
             $this->update[] = [
-                "ticket" => [
-                    "id" => $ticket->id,
-                    "title" => $ticket->title,
-                    "desc" => $ticket->desc,
-                    "asker" => [
-                        "first_name" => $ticket->asker->first_name,
-                        "last_name" => $ticket->asker->last_name,
-                    ]
+                "id" => $ticket->id,
+                "title" => $ticket->title,
+                "desc" => $ticket->desc,
+                "asker" => [
+                    "first_name" => $ticket->asker->first_name,
+                    "last_name" => $ticket->asker->last_name,
                 ]
             ];
         }
