@@ -22,8 +22,19 @@ class Ticket extends Model
         return $this->belongsTo('App\User', 'ask_id');
     }
 
+    public function helper()
+    {
+        return $this->belongsTo('App\User', 'help_id');
+    }
+
+    public function hasHelper()
+    {
+        return !empty($this->helper);
+    }
+  
     public function tags()
     {
         return $this->belongsToMany('App\Tag', 'ticket-tag', 'ticket_id', 'tag_id');
+
     }
 }
