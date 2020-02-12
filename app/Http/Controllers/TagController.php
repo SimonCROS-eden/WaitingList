@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Tag;
 use App\Ticket;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreTag;
 
 class TagController extends Controller
 {
@@ -16,51 +17,25 @@ class TagController extends Controller
     public function index()
     {
         $tags = Tag::all();
-        
-        return view('tag' , ["tags" => $tags]);
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('tag' , ["tags" => $tags]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\StoreTag  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTag $request)
     {
-        //
-    }
+        $validated = $request->validated();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Tag $tag)
-    {
-        //
-    }
+        $ticket = new Tag;
+        $ticket->fill($validated);
+        $ticket->save();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tag $tag)
-    {
-        //
+        return redirect('/tag');
     }
 
     /**

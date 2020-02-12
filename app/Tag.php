@@ -13,7 +13,9 @@ class Tag extends Model
      */
     protected $table = 'tag';
 
-    
+    protected $fillable = [
+        'name', 'color'
+    ];
 
     public function tickets()
     {

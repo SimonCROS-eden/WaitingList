@@ -16,4 +16,4 @@ Auth::routes();
 Route::get('/', 'TicketController@index')->name('dashboard');
 Route::get('/connect', 'TicketController@connect')->name('connect');
 Route::resource('ticket', 'TicketController')->except(['index'])->middleware('auth');
-Route::resource('tag', 'TagController')->middleware('admin', 'auth');
+Route::resource('tag', 'TagController')->except(['edit', 'create', 'show'])->middleware('admin');
