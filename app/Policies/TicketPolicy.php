@@ -18,7 +18,7 @@ class TicketPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        
     }
 
     /**

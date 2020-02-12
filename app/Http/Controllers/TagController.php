@@ -9,6 +9,11 @@ use App\Http\Requests\StoreTag;
 
 class TagController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Tag::class, 'tag');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +21,7 @@ class TagController extends Controller
      */
     public function index()
     {
+
         $tags = Tag::all();
 
         return view('tag' , ["tags" => $tags]);
