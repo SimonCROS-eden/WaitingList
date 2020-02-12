@@ -19,3 +19,4 @@ Route::put('/ticket/{ticket}/take', 'TicketController@updateTake')->name('update
 Route::post('/ticket/{ticket}/end', 'TicketController@deleteEnd')->name('deleteEnd');
 Route::post('/ticket/{ticket}/renew', 'TicketController@renewTicket')->name('renewTicket');
 Route::resource('ticket', 'TicketController')->except(['index'])->middleware('auth');
+Route::resource('tag', 'TagController')->middleware('admin', 'auth');

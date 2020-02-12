@@ -31,4 +31,10 @@ class Ticket extends Model
     {
         return !empty($this->helper);
     }
+  
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag', 'ticket-tag', 'ticket_id', 'tag_id');
+
+    }
 }
