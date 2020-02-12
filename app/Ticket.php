@@ -21,4 +21,9 @@ class Ticket extends Model
     {
         return $this->belongsTo('App\User', 'ask_id');
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag', 'ticket-tag', 'ticket_id', 'tag_id');
+    }
 }
