@@ -30,7 +30,26 @@
         
         <ul>
             @foreach ($tags as $tag)
-                <li>{{ $tag->name }}</li>
+                <li>
+                    <p class="tags" style="color: {{ $tag->color }}">{{ $tag->name }}</p>
+                    <div style="display:none">
+                        <form action="/tag/{{ $tag->id }}" method="post">
+                            @csrf
+                            @method('PUT')
+                            <input id="{{ $tag->name }}" type="text" value="{{ $tag->name }}" class="form-control @error('name') is-invalid @enderror" name="{{ $tag->name }}" required autocomplete="name">
+
+                            <input id="{{ $tag->color }}" type="color" value="{{ old('color') ? old('color') : $tag->color }}" class="form-control @error('color') is-invalid @enderror" name="{{ $tag->color }}" required>
+
+                            <button type="submit">ok</button>
+                        </form>
+                        <form action="/tag/{{ $tag->id }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">delete</button>
+                        </form>
+                    </div>
+                    
+                </li>
             @endforeach
         </ul>
     </div>

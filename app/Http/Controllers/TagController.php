@@ -53,7 +53,20 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-        //
+        $inputName = $tag->name;
+        $inputColor = $tag->color;
+        
+        $validatedData = $request->validate([
+            $inputName => 'required|min:5|max:20',
+            $inputColor => 'required'
+        ]);
+        
+        $tags = Tag::find($tag->id);
+        $tags->name = $request->$inputName;
+        $tags->color = $request->$inputColor;
+        $tags->save();
+
+        return redirect('/tag');
     }
 
     /**
@@ -64,6 +77,8 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $tag->delete();
+
+        return redirect('/tag');
     }
 }

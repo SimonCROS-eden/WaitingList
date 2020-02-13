@@ -122,6 +122,7 @@ class TicketController extends Controller
         return redirect('/');
     }
 
+    
     public function renewTicket(Request $request, Ticket $ticket)
     {
         $ticket->helper()->dissociate();
