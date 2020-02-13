@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Ticket extends Model
 {
@@ -35,6 +36,15 @@ class Ticket extends Model
     public function tags()
     {
         return $this->belongsToMany('App\Tag', 'ticket-tag', 'ticket_id', 'tag_id');
+    }
 
+    public function updateTake()
+    {
+        return Auth::user()->can('updateTake', $this);
+    }
+
+    public function updateTakeMaker()
+    {
+        return Auth::user()->can('updateTakeMaker', $this);
     }
 }
