@@ -17,6 +17,7 @@ class CreateTagTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('color');
+            $table->timestamps();
         });
     }
 

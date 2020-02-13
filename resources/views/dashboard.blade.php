@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="w-75 px-5">
-    <section id="tickets">
-
+<div class="container">
+    <section id="tickets" ref="tickets">
+        <ticket v-for="(ticket,index) in tickets" :ticket="ticket" :key="index"></ticket>
     </section>
 </div>
 @endsection

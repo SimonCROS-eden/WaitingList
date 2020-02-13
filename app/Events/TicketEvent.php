@@ -14,8 +14,8 @@ class TicketEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $update = [];
-    public $remove = [];
+    public $update = null;
+    public $remove = null;
 
     /**
      * Create a new event instance.
@@ -25,15 +25,18 @@ class TicketEvent implements ShouldBroadcast
     public function __construct($update, $remove = [])
     {
         foreach ($update as $ticket) {
-            $this->update[] = [
+            $this->update = [
                 "id" => $ticket->id,
                 "title" => $ticket->title,
-                "user" => $ticket->asker->first_name . " " . $ticket->asker->last_name,
-                "description" => $ticket->desc
+                "desc" => $ticket->desc,
+                "asker" => [
+                    "first_name" => $ticket->asker->first_name,
+                    "last_name" => $ticket->asker->last_name,
+                ]
             ];
         }
         foreach ($remove as $ticket) {
-            $this->remove[] = [
+            $this->remove = [
                 "id" => $ticket->id
             ];
         }
