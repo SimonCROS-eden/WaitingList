@@ -24,7 +24,8 @@ class TicketController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            return view('dashboard');
+            $tickets = Ticket::with('asker')->orderBy('created_at', 'desc')->get();
+            return view('dashboard', ["tickets" => $tickets]);
         }
 
         return view('home');
@@ -71,7 +72,7 @@ class TicketController extends Controller
 
         broadcast(new TicketEvent([$ticket]))->toOthers();
 
-        return redirect('/');
+        return redirect('/ticket/create');
     }
 
     /**
@@ -143,6 +144,7 @@ class TicketController extends Controller
         return redirect('/');
     }
 
+    
     public function renewTicket(Request $request, Ticket $ticket)
     {
         $ticket->helper()->dissociate();
@@ -193,7 +195,20 @@ class TicketController extends Controller
         return redirect('/');
     }
 
-    public function connect() {
-        event(new TicketEvent(Ticket::all()));
+    public function data() {
+        $update = [];
+        foreach (Ticket::orderBy('created_at', 'DESC')->get() as $ticket) {
+            $update[] = [
+                "id" => $ticket->id,
+                "title" => $ticket->title,
+                "desc" => $ticket->desc,
+                "asker" => [
+                    "first_name" => $ticket->asker->first_name,
+                    "last_name" => $ticket->asker->last_name,
+                ]
+            ];
+        }
+        header('Content-Type: application/json');
+        echo json_encode($update);
     }
 }
