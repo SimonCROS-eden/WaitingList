@@ -30,7 +30,19 @@
         
         <ul>
             @foreach ($tags as $tag)
-                <li>{{ $tag->name }}</li>
+                <li>
+                    <p class="tags">{{ $tag->name }}</p>
+                    <div style="display:none">
+                        <form action="/ttt">
+                            <input type="text" value="{{ $tag->name }}">
+                            <button type="submit">ok</button>
+                        </form>
+                        <form action="/ttt">
+                            <button type="submit">delete</button>
+                        </form>
+                    </div>
+                    
+                </li>
             @endforeach
         </ul>
     </div>
