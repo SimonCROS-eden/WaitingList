@@ -35,7 +35,27 @@ const app = new Vue({
             console.log('ok');
         },
         addTicket(data) {
-            
+            this.tickets.unshift(data);
+            console.log(this.tickets);
+        },
+        updateTicket(data) {
+            for (let ticket of this.tickets) {
+                if (ticket.id == data.id) {                    
+                    Vue.set(this.tickets, this.tickets.indexOf(ticket), data);
+                    return;
+                }
+            }
+            this.addTicket(data);
+        },
+        removeTicket(data) {
+            for (let ticket of this.tickets) {
+                if (ticket.id == data.id) {
+                    this.$delete(this.tickets, this.tickets.indexOf(ticket));
+                    console.log(this.tickets);
+                    
+                    return;
+                }
+            }
         }
     }
 });
@@ -53,52 +73,12 @@ window.Echo = new Echo({
 let section = $("#tickets");
 window.Echo.channel("waitinglist_database_ticket")
 .listen("TicketEvent", (data) => { 
-    app.tickets.push(data.update[0])
-    // for (let ticket of data.update) {
-    //     let div = $("<div></div>");
-    //     div.append("<hr />");
-    //     div.attr("data-id", ticket.id);
-    //     {
-    //         let user = $("<p></p>");
-    //         user.text(ticket.user);
-    //         div.append(user);
-    //     }
-    //     {
-    //         let title = $("<h2></h2>");
-    //         {
-    //             let a = $("<a></a>");
-    //             a.attr('href', "/ticket/" + ticket.id + "/");
-    //             a.text(ticket.title);
-    //             title.append(a);
-    //         }
-    //         div.append(title);
-    //     }
-    //     {
-    //         let description = $("<pre></pre>");
-    //         description.text(ticket.description);
-    //         div.append(description);
-    //     }
-    //     {
-    //         let take = $("<button>/button>");
-    //         take.text("Prendre");
-    //         div.append(take);
-    //     }
-
-    //     let old = section.find('[data-id="'+ticket.id+'"]');
-        
-    //     if (old.length) {
-    //         old.replaceWith(div);
-    //     } else {
-    //         section.prepend(div);
-    //     }
-    // }
-    // for (let ticket of data.remove) {
-    //     let old = section.find('[data-id="'+ticket.id+'"]');
-        
-    //     if (old.length) {
-    //         old.remove();
-    //     }
-    // }
+    if (data.update) {
+        app.updateTicket(data.update);
+    }
+    if (data.remove) {
+        app.removeTicket(data.remove);
+    }
 });
 
 axios.post("/data", {}).then(function (response) {

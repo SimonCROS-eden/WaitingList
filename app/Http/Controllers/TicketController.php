@@ -122,7 +122,7 @@ class TicketController extends Controller
 
     public function data() {
         $update = [];
-        foreach (Ticket::all() as $ticket) {
+        foreach (Ticket::orderBy('created_at', 'DESC')->get() as $ticket) {
             $update[] = [
                 "id" => $ticket->id,
                 "title" => $ticket->title,
