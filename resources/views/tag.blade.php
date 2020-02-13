@@ -30,7 +30,7 @@
         
         <ul>
             @foreach ($tags as $tag)
-                <li>{{ $tag->name }}</li>
+                <li style="color: {{$tag->color}}">{{ $tag->name }}</li>
             @endforeach
         </ul>
     </div>
