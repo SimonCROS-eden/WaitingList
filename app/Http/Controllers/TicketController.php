@@ -54,6 +54,10 @@ class TicketController extends Controller
         $ticket->asker()->associate(Auth::user());
         $ticket->save();
 
+        $userAsk = User::find(Auth::user()->id);
+        $userAsk->nbAsk = Auth::user()->nbAsk + 1;
+        $userAsk->save();
+
         broadcast(new TicketEvent([$ticket]))->toOthers();
 
         return redirect('/ticket/create');
@@ -102,6 +106,54 @@ class TicketController extends Controller
 
         return redirect('/');
     }
+
+
+    public function updateTake(Request $request, Ticket $ticket)
+    {
+
+        if ($ticket->hasHelper() && Auth::user()->can('updateTake', $ticket)) {
+            $ticket->helper()->dissociate();
+            $ticket->save();
+        } else {
+            $ticket->helper()->associate(Auth::user());
+            $ticket->save();
+        }
+
+        return redirect('/');
+    }
+
+    public function renewTicket(Request $request, Ticket $ticket)
+    {
+        $ticket->helper()->dissociate();
+        $ticket->save();
+
+        return redirect('/');
+    }
+
+
+    public function deleteEnd(Request $request, Ticket $ticket)
+    {
+        $this->authorize('delete', $ticket);
+
+        $morePoint = 10;
+        $lessPoint = 2;
+
+        $scoreAsker = $ticket->asker->scoreHelp;
+        $scoreHelper = $ticket->helper->scoreHelp;
+
+        $userAsk = User::find($ticket->asker->id);
+        $userAsk->scoreHelp = $scoreAsker - $lessPoint;
+        $userAsk->save();
+
+        $userHelp = User::find($ticket->helper->id);
+        $userHelp->scoreHelp = $scoreHelper + $morePoint;
+        $userHelp->save();
+
+        $ticket->delete();
+
+        return redirect('/');
+    }
+
 
     /**
      * Remove the specified resource from storage.

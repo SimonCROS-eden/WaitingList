@@ -22,6 +22,7 @@
 </head>
 <body>
     <div id="app">
+    
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -55,7 +56,12 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->first_name. " ". Auth::user()->last_name }} <span class="caret"></span>
+                                    {{ Auth::user()->fullName()}} 
+                                    <span>{{ Auth::user()->scoreHelp }}</span> 
+                                    @if (Auth::user()->isAdmin())
+                                        <span>{{ Auth::user()->nbAsk }}</span> 
+                                    @endif
+                                    <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -80,7 +86,16 @@
             @auth
                 <ul>
                     @foreach ($users as $user)
-                        <li>{{ $user->last_name }}</li>
+                        <li>
+                            <p>
+                                {{ $user->fullName() }}
+                                <span>{{ $user->scoreHelp }}</span>
+
+                                @if (Auth::user()->isAdmin())
+                                    <span>{{ $user->nbAsk }}</span>
+                                @endif
+                            </p>
+                        </li>
                     @endforeach
                 </ul>
             @endauth

@@ -18,7 +18,7 @@ class TicketPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        
     }
 
     /**
@@ -66,6 +66,16 @@ class TicketPolicy
     public function delete(User $user, Ticket $ticket)
     {
         return $user->id === $ticket->ask_id || $user->isAdmin();
+    }
+
+    public function updateTake(User $user, Ticket $ticket)
+    {
+        return $user->id === $ticket->help_id || $user->isAdmin();
+    }
+
+    public function updateTakeMaker(User $user, Ticket $ticket)
+    {
+        return $user->id === $ticket->ask_id;
     }
 
     /**

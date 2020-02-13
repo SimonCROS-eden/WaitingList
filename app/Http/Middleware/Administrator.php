@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
+
 class Administrator
 {
     /**
@@ -15,10 +16,10 @@ class Administrator
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user()->isAdmin()) {
-            return redirect('/');
+        if (\Auth::user() && \Auth::user()->isAdmin()) {
+            return $next($request);
         }
 
-        return $next($request);
+        return redirect('/');
     }
 }
