@@ -9,6 +9,9 @@
         <form method="POST" action="/ticket/{{$ticket->id}}">
             @csrf
             {{method_field('PATCH')}}
+            @foreach ($ticket->tags as $tag)
+                <p>{{ $tag->name }}</p>
+            @endforeach
             <input id="title" type="text" value="{{ old('title') ? old('title') : $ticket->title }}" class="form-control @error('title') is-invalid @enderror" name="title" required autocomplete="title" placeholder="Titre ticket">
             @error('title')
                 <span class="invalid-feedback" role="alert">
@@ -22,6 +25,23 @@
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
+            
+            <div class="nav-item dropdown">
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    choisissez vos tags :
+                    <span class="caret"></span>
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    
+                    @foreach ($allTags as $oneTag)
+                        <div>
+                            <label for="tag-{{ $oneTag->name }}">{{ $oneTag->name }}</label>
+                            <input type="checkbox" id="tag-{{ $oneTag->name }}" name="tag-{{ $oneTag->name }}" value="{{ $oneTag->id }}" {{ in_array($oneTag->id, $ticket->tags->pluck("id")->toArray()) == 1 ? 'checked' : "" }}>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
 
             <button type="submit" class="btn btn-primary">
                 Edit

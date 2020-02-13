@@ -21,6 +21,22 @@
                 </span>
             @enderror
 
+            <div class="nav-item dropdown">
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    choisissez vos tags :
+                    <span class="caret"></span>
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    @foreach ($tags as $tag)
+                        <div>
+                            <label for="tag-{{ $tag->name }}">{{ $tag->name }}</label>
+                            <input type="checkbox" id="tag-{{ $tag->name }}" name="tag-{{ $tag->name }}" value="{{ $tag->id }}">
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
             <button type="submit" class="btn btn-primary">
                 Create
             </button>
