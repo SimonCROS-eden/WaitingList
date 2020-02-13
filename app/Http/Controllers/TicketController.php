@@ -22,7 +22,8 @@ class TicketController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            return view('dashboard');
+            $tickets = Ticket::with('asker')->orderBy('created_at', 'desc')->get();
+            return view('dashboard', ["tickets" => $tickets]);
         }
 
         return view('home');
@@ -59,7 +60,7 @@ class TicketController extends Controller
 
         broadcast(new TicketEvent([$ticket]))->toOthers();
 
-        return redirect('/');
+        return redirect('/ticket/create');
     }
 
     /**
@@ -117,14 +118,18 @@ class TicketController extends Controller
             $ticket->helper()->associate(Auth::user());
             $ticket->save();
         }
+        broadcast(new TicketEvent([$ticket]))->toOthers();
 
         return redirect('/');
     }
 
+    
     public function renewTicket(Request $request, Ticket $ticket)
     {
         $ticket->helper()->dissociate();
         $ticket->save();
+
+        broadcast(new TicketEvent([$ticket]))->toOthers();
 
         return redirect('/');
     }
@@ -147,6 +152,8 @@ class TicketController extends Controller
         $userHelp = User::find($ticket->helper->id);
         $userHelp->scoreHelp = $scoreHelper + $morePoint;
         $userHelp->save();
+
+        broadcast(new TicketEvent([], [$ticket]))->toOthers();
 
         $ticket->delete();
 
@@ -171,7 +178,29 @@ class TicketController extends Controller
         return redirect('/');
     }
 
-    public function connect() {
-        event(new TicketEvent(Ticket::all()));
+    public function data() {
+        $update = [];
+        foreach (Ticket::orderBy('created_at', 'DESC')->get() as $ticket) {
+            $helper = $ticket->helper ? [
+                "first_name" => $ticket->helper->first_name,
+                "last_name" => $ticket->helper->last_name,
+            ] : null;
+            $update[] = [
+                "id" => $ticket->id,
+                "title" => $ticket->title,
+                "desc" => $ticket->desc,
+                "ask_id" => $ticket->ask_id,
+                "help_id" => $ticket->help_id,
+                "update_take" => $ticket->updateTake(),
+                "update_take_maker" => $ticket->updateTakeMaker(),
+                "asker" => [
+                    "first_name" => $ticket->asker->first_name,
+                    "last_name" => $ticket->asker->last_name,
+                ],
+                "helper" => $helper,
+            ];
+        }
+        header('Content-Type: application/json');
+        echo json_encode($update);
     }
 }
