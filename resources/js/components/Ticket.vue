@@ -4,7 +4,6 @@
         <p>{{ ticket.asker.first_name + " " + ticket.asker.last_name }}</p>
         <h2><a :href="'/ticket/' + ticket.id + '/'">{{ ticket.title }}</a></h2>
         <pre>{{ ticket.desc }}</pre>
-<<<<<<< HEAD
 
         <form @submit.prevent="onSubmit" v-if="(!ticket.helper || update_take()) && isOwner()" :action="'/ticket/' + ticket.id" method="post">
             <input type="hidden" name="_token" :value="csrf">
@@ -42,16 +41,12 @@
                 {{ ticket.ask_id === ticket.help_id ? "Le ticket est mit en pause ..." : "Pris par : " + ticket.helper.first_name + " " + ticket.helper.last_name }}
             </template>
         </form>
-=======
-        <button>Prendre</button>
->>>>>>> 55d14ef1c10a7ec6c17fbb4c135003474c3d07d7
     </div>
 </template>
 
 <script>
     export default {
         props: ['ticket'],
-<<<<<<< HEAD
         data: () => ({
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             admin: document.querySelector('meta[name="admin"]').getAttribute('content'),
@@ -71,7 +66,5 @@
                 axios.post(e.target.action, $(e.target).serialize())
             }
         },
-=======
->>>>>>> 55d14ef1c10a7ec6c17fbb4c135003474c3d07d7
     }
 </script>
