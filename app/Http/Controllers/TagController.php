@@ -24,7 +24,7 @@ class TagController extends Controller
 
         $tags = Tag::all();
 
-        return view('tag' , ["tags" => $tags]);
+        return view('tag', ["tags" => $tags]);
     }
 
     /**
@@ -41,7 +41,7 @@ class TagController extends Controller
         $ticket->fill($validated);
         $ticket->save();
 
-        return redirect('/tag');
+        return redirect()->route('tag.index');
     }
 
     /**

@@ -63,11 +63,14 @@ const app = new Vue({
 $(".tags").click(function () {
     $(this).toggle();
     $(this).siblings().toggle();
+<<<<<<< HEAD
 });
 
 $(".tags").click(function () {
     $(this).toggle();
     $(this).siblings().toggle();
+=======
+>>>>>>> 55d14ef1c10a7ec6c17fbb4c135003474c3d07d7
 });
 
 require('./bootstrap');

@@ -30,7 +30,7 @@
         
         <ul>
             @foreach ($tags as $tag)
-                <li>
+                <li style="color: {{$tag->color}}">
                     <p class="tags" style="color: {{ $tag->color }}">{{ $tag->name }}</p>
                     <div style="display:none">
                         <form action="/tag/{{ $tag->id }}" method="post">
