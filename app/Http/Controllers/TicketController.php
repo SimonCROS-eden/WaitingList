@@ -60,7 +60,7 @@ class TicketController extends Controller
 
         broadcast(new TicketEvent([$ticket]))->toOthers();
 
-        return redirect('/ticket/create');
+        return redirect()->route('dashboard');
     }
 
     /**
@@ -104,7 +104,7 @@ class TicketController extends Controller
 
         broadcast(new TicketEvent([$ticket]))->toOthers();
 
-        return redirect('/');
+        return redirect()->route('dashboard');
     }
 
 
@@ -119,7 +119,7 @@ class TicketController extends Controller
             $ticket->save();
         }
 
-        return redirect('/');
+        return redirect()->route('dashboard');
     }
 
     public function renewTicket(Request $request, Ticket $ticket)
@@ -127,7 +127,7 @@ class TicketController extends Controller
         $ticket->helper()->dissociate();
         $ticket->save();
 
-        return redirect('/');
+        return redirect()->route('dashboard');
     }
 
 
@@ -151,7 +151,7 @@ class TicketController extends Controller
 
         $ticket->delete();
 
-        return redirect('/');
+        return redirect()->route('dashboard');
     }
 
 
@@ -169,7 +169,7 @@ class TicketController extends Controller
 
         $ticket->delete();
 
-        return redirect('/');
+        return redirect()->route('dashboard');
     }
 
     public function data() {
