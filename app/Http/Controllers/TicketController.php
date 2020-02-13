@@ -58,7 +58,7 @@ class TicketController extends Controller
         $userAsk->nbAsk = Auth::user()->nbAsk + 1;
         $userAsk->save();
 
-        broadcast(new TicketEvent([$ticket]))->toOthers();
+        broadcast(new TicketEvent([$ticket]));
 
         return redirect('/ticket/create');
     }
@@ -102,7 +102,7 @@ class TicketController extends Controller
         $ticket->fill($validated);
         $ticket->save();
 
-        broadcast(new TicketEvent([$ticket]))->toOthers();
+        broadcast(new TicketEvent([$ticket]));
 
         return redirect('/');
     }
@@ -118,7 +118,7 @@ class TicketController extends Controller
             $ticket->helper()->associate(Auth::user());
             $ticket->save();
         }
-        broadcast(new TicketEvent([$ticket]))->toOthers();
+        broadcast(new TicketEvent([$ticket]));
 
         return redirect('/');
     }
@@ -129,7 +129,7 @@ class TicketController extends Controller
         $ticket->helper()->dissociate();
         $ticket->save();
 
-        broadcast(new TicketEvent([$ticket]))->toOthers();
+        broadcast(new TicketEvent([$ticket]));
 
         return redirect('/');
     }
@@ -153,7 +153,7 @@ class TicketController extends Controller
         $userHelp->scoreHelp = $scoreHelper + $morePoint;
         $userHelp->save();
 
-        broadcast(new TicketEvent([], [$ticket]))->toOthers();
+        broadcast(new TicketEvent([], [$ticket]));
 
         $ticket->delete();
 
@@ -171,7 +171,7 @@ class TicketController extends Controller
     {
         $this->authorize('delete', $ticket);
 
-        broadcast(new TicketEvent([], [$ticket]))->toOthers();
+        broadcast(new TicketEvent([], [$ticket]));
 
         $ticket->delete();
 

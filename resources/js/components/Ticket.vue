@@ -5,7 +5,7 @@
         <h2><a :href="'/ticket/' + ticket.id + '/'">{{ ticket.title }}</a></h2>
         <pre>{{ ticket.desc }}</pre>
 
-        <form v-if="(!ticket.helper || update_take()) && isOwner()" :action="'/ticket/' + ticket.id" method="post">
+        <form @submit.prevent="onSubmit" v-if="(!ticket.helper || update_take()) && isOwner()" :action="'/ticket/' + ticket.id" method="post">
             <input type="hidden" name="_token" :value="csrf">
             <input type="hidden" name="_method" value="DELETE">
             <button type="submit">
@@ -13,13 +13,13 @@
             </button>
         </form>
         <template v-else-if="isOwner()">
-            <form :action="'/ticket/' + ticket.id + '/end'" method="post">
+            <form @submit.prevent="onSubmit" :action="'/ticket/' + ticket.id + '/end'" method="post">
                 <input type="hidden" name="_token" :value="csrf">
                 <button type="submit">
                     Finir
                 </button>
             </form>
-            <form :action="'/ticket/' + ticket.id + '/renew'" method="post">
+            <form @submit.prevent="onSubmit" :action="'/ticket/' + ticket.id + '/renew'" method="post">
                 <input type="hidden" name="_token" :value="csrf">
                 <button type="submit">
                     Renouveller
@@ -27,7 +27,7 @@
             </form>
         </template>
 
-        <form :action="'/ticket/' + ticket.id + '/take'" method="post">
+        <form @submit.prevent="onSubmit" :action="'/ticket/' + ticket.id + '/take'" method="post">
             <input type="hidden" name="_token" :value="csrf">
             <input type="hidden" name="_method" value="PUT">
 
@@ -61,7 +61,10 @@
             },
             isOwner() {
                 return this.id == this.ticket.ask_id;
+            },
+            onSubmit: function(e) {
+                axios.post(e.target.action, $(e.target).serialize())
             }
-        }
+        },
     }
 </script>
