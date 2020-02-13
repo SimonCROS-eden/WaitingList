@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Ticket;
 use App\User;
+use App\Tag;
+use App\TicketTag;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreTicket;
 use App\Events\TicketEvent;
@@ -36,7 +38,9 @@ class TicketController extends Controller
      */
     public function create()
     {
-        return view('ticket/create');
+        $tags = Tag::all();
+
+        return view('ticket/create', ["tags" => $tags]);
     }
 
     /**
@@ -57,6 +61,14 @@ class TicketController extends Controller
         $userAsk = User::find(Auth::user()->id);
         $userAsk->nbAsk = Auth::user()->nbAsk + 1;
         $userAsk->save();
+
+        $tags = [];
+        foreach ($request->all() as $field => $input) {
+            if (preg_match("/tag-[A-z]+/i", $field)) {
+                $tags[] = $input;
+            }
+        }
+        $ticket->tags()->attach($tags);
 
         broadcast(new TicketEvent([$ticket]))->toOthers();
 
@@ -83,8 +95,9 @@ class TicketController extends Controller
     public function edit(Ticket $ticket)
     {
         $this->authorize('update', $ticket);
+        $allTags = Tag::all();
 
-        return view('ticket/edit', ["ticket" => $ticket]);
+        return view('ticket/edit', ["ticket" => $ticket, "allTags" => $allTags]);
     }
 
     /**
@@ -101,6 +114,15 @@ class TicketController extends Controller
 
         $ticket->fill($validated);
         $ticket->save();
+
+        $tags = [];
+        foreach ($request->all() as $field => $input) {
+            if (preg_match("/tag-[A-z]+/i", $field)) {
+                $tags[] = $input;
+            }
+        }
+        $ticket->tags()->detach();
+        $ticket->tags()->attach($tags);
 
         broadcast(new TicketEvent([$ticket]))->toOthers();
 
