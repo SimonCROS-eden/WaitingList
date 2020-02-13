@@ -18,8 +18,8 @@ class CreateTicketTagTable extends Migration
             $table->biginteger('ticket_id')->unsigned();
             $table->biginteger('tag_id')->unsigned();
 
-            $table->foreign('ticket_id')->references('id')->on('ticket');
-            $table->foreign('tag_id')->references('id')->on('tag');
+            $table->foreign('ticket_id')->references('id')->on('ticket')->onDelete('cascade');
+            $table->foreign('tag_id')->references('id')->on('tag')->onDelete('cascade');
         });
     }
 
