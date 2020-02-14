@@ -59,6 +59,9 @@
                             <li>
                                 <a href="{{ route('ticket.create') }}">Create</a>
                             </li>
+                            <li>
+                                <a href="{{ route('tag.index') }}">Tag</a>
+                            </li>
                             @if (Auth::user()->isAdmin())
                                 <li>
                                     <a href="{{ route('tag.index') }}">Tag</a>

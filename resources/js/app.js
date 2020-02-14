@@ -31,12 +31,8 @@ const app = new Vue({
         tickets: []
     },
     methods: {
-        test() {
-            console.log('ok');
-        },
         addTicket(data) {
             this.tickets.unshift(data);
-            console.log(this.tickets);
         },
         updateTicket(data) {
             for (let ticket of this.tickets) {
@@ -47,12 +43,10 @@ const app = new Vue({
             }
             this.addTicket(data);
         },
-        removeTicket(data) {
+        removeTicket(id) {
             for (let ticket of this.tickets) {
-                if (ticket.id == data.id) {
+                if (ticket.id == id) {
                     this.$delete(this.tickets, this.tickets.indexOf(ticket));
-                    console.log(this.tickets);
-                    
                     return;
                 }
             }
@@ -77,7 +71,7 @@ window.Echo = new Echo({
 
 let section = $("#tickets");
 window.Echo.channel("waitinglist_database_ticket")
-.listen("TicketEvent", (data) => { 
+.listen("TicketEvent", (data) => {
     if (data.update) {
         app.updateTicket(data.update);
     }
