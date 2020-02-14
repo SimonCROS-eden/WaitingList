@@ -28,7 +28,7 @@
 <body>
     <div id="app">
     
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -59,9 +59,11 @@
                             <li>
                                 <a href="{{ route('ticket.create') }}">Create</a>
                             </li>
-                            <li>
-                                <a href="{{ route('tag.index') }}">Tag</a>
-                            </li>
+                            @if (Auth::user()->isAdmin())
+                                <li>
+                                    <a href="{{ route('tag.index') }}">Tag</a>
+                                </li>
+                            @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->fullName()}} 

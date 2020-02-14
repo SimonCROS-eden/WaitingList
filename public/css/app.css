@@ -10884,3 +10884,7 @@ a.text-dark:focus {
   }
 }
 
+nav {
+  background: linear-gradient(90deg, #3490dc, #6c757d);
+}
+
