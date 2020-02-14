@@ -70,11 +70,7 @@ class TicketController extends Controller
         }
         $ticket->tags()->attach($tags);
 
-<<<<<<< HEAD
         broadcast(new TicketEvent($ticket));
-=======
-        broadcast(new TicketEvent([$ticket]));
->>>>>>> 9270508a8d2089c10af7576add301579a4d4198b
 
         return redirect()->route('dashboard');
     }
@@ -128,11 +124,7 @@ class TicketController extends Controller
         $ticket->tags()->detach();
         $ticket->tags()->attach($tags);
 
-<<<<<<< HEAD
         broadcast(new TicketEvent($ticket));
-=======
-        broadcast(new TicketEvent([$ticket]));
->>>>>>> 9270508a8d2089c10af7576add301579a4d4198b
 
         return redirect()->route('dashboard');
     }
@@ -148,11 +140,7 @@ class TicketController extends Controller
             $ticket->helper()->associate(Auth::user());
             $ticket->save();
         }
-<<<<<<< HEAD
         broadcast(new TicketEvent($ticket));
-=======
-        broadcast(new TicketEvent([$ticket]));
->>>>>>> 9270508a8d2089c10af7576add301579a4d4198b
 
         return redirect()->route('dashboard');
     }
@@ -163,11 +151,7 @@ class TicketController extends Controller
         $ticket->helper()->dissociate();
         $ticket->save();
 
-<<<<<<< HEAD
         broadcast(new TicketEvent($ticket));
-=======
-        broadcast(new TicketEvent([$ticket]));
->>>>>>> 9270508a8d2089c10af7576add301579a4d4198b
 
         return redirect()->route('dashboard');
     }
@@ -191,11 +175,7 @@ class TicketController extends Controller
         $userHelp->scoreHelp = $scoreHelper + $morePoint;
         $userHelp->save();
 
-<<<<<<< HEAD
         broadcast(new TicketEvent(null, $ticket));
-=======
-        broadcast(new TicketEvent([], [$ticket]));
->>>>>>> 9270508a8d2089c10af7576add301579a4d4198b
 
         $ticket->delete();
 
@@ -227,7 +207,6 @@ class TicketController extends Controller
                 "first_name" => $ticket->helper->first_name,
                 "last_name" => $ticket->helper->last_name,
             ] : null;
-<<<<<<< HEAD
             $tags = [];
             foreach ($ticket->tags as $tag) {
                 $tags[] = [
@@ -235,8 +214,6 @@ class TicketController extends Controller
                     "color" => $tag->color
                 ];
             }
-=======
->>>>>>> 9270508a8d2089c10af7576add301579a4d4198b
             $update[] = [
                 "id" => $ticket->id,
                 "title" => $ticket->title,
@@ -250,10 +227,7 @@ class TicketController extends Controller
                     "last_name" => $ticket->asker->last_name,
                 ],
                 "helper" => $helper,
-<<<<<<< HEAD
                 "tags" => $tags
-=======
->>>>>>> 9270508a8d2089c10af7576add301579a4d4198b
             ];
         }
         header('Content-Type: application/json');
