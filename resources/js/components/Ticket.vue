@@ -4,6 +4,9 @@
         <p>{{ ticket.asker.first_name + " " + ticket.asker.last_name }}</p>
         <h2><a :href="'/ticket/' + ticket.id + '/'">{{ ticket.title }}</a></h2>
         <pre>{{ ticket.desc }}</pre>
+        <ul>
+            <li v-for="(tag, index) in ticket.tags" :key="index" :style="'background-color: ' + tag.color">{{ tag.name }}</li>
+        </ul>
 
         <form @submit.prevent="onSubmit" v-if="(!ticket.helper || update_take()) && isOwner()" :action="'/ticket/' + ticket.id" method="post">
             <input type="hidden" name="_token" :value="csrf">

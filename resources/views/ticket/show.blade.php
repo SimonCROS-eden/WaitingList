@@ -7,6 +7,9 @@
         <p>{{ $ticket->asker->first_name }} {{ $ticket->asker->last_name }}</p>
         <h2>{{ $ticket->name }}</h2>
         <p>{{ $ticket->desc }}</p>
+        @foreach ($ticket->tags as $tag)
+            <p style="color: {{ $tag->color }}">{{ $tag->name }}</p>
+        @endforeach
 
         @if ($ticket->asker == Auth::user() || Auth::user()->isAdmin())
             <a href="/ticket/{{$ticket->id}}/edit"><button type="button">Edit</button></a>

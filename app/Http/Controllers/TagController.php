@@ -37,9 +37,9 @@ class TagController extends Controller
     {
         $validated = $request->validated();
 
-        $ticket = new Tag;
-        $ticket->fill($validated);
-        $ticket->save();
+        $tag = new Tag;
+        $tag->fill($validated);
+        $tag->save();
 
         return redirect()->route('tag.index');
     }
