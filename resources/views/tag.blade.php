@@ -30,16 +30,6 @@
         
         <ul>
             @foreach ($tags as $tag)
-<<<<<<< HEAD
-                <li>
-                    <p class="tags">{{ $tag->name }}</p>
-                    <div style="display:none">
-                        <form action="/ttt">
-                            <input type="text" value="{{ $tag->name }}">
-                            <button type="submit">ok</button>
-                        </form>
-                        <form action="/ttt">
-=======
                 <li style="color: {{$tag->color}}">
                     <p class="tags" style="color: {{ $tag->color }}">{{ $tag->name }}</p>
                     <div style="display:none">
@@ -55,7 +45,6 @@
                         <form action="/tag/{{ $tag->id }}" method="post">
                             @csrf
                             @method('DELETE')
->>>>>>> d2e64801f1d669ff98670240043724d052918987
                             <button type="submit">delete</button>
                         </form>
                     </div>
