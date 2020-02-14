@@ -62,7 +62,7 @@
             update_take_maker() {
                 return this.id == this.ticket.ask_id;
             },
-            isOwner() {                
+            isOwner() {
                 return this.id == this.ticket.ask_id;
             },
             onSubmit: function(e) {

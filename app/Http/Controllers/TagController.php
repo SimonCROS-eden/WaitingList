@@ -41,7 +41,10 @@ class TagController extends Controller
         $tag->fill($validated);
         $tag->save();
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9270508a8d2089c10af7576add301579a4d4198b
         return redirect()->route('tag.index');
     }
 

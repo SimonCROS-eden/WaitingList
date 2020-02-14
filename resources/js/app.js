@@ -71,8 +71,8 @@ window.Echo = new Echo({
 
 let section = $("#tickets");
 window.Echo.channel("waitinglist_database_ticket")
-.listen("TicketEvent", (data) => {        
-    if (data.update) {        
+.listen("TicketEvent", (data) => {
+    if (data.update) {
         app.updateTicket(data.update);
     }
     if (data.remove) {
