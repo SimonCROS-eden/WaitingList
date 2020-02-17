@@ -7,6 +7,7 @@
             <div class="card">
                 <div class="card-body text-center">
                     <h1 class="text-primary">{{ __('Login') }}</h1>
+                    
                     <form class="text-left" method="POST" action="{{ route('login') }}">
                         @csrf
 
