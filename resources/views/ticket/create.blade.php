@@ -8,7 +8,7 @@
                 <div class="card-body text-center">
                     <h1 class="text-primary">{{ __('Création ticket') }}</h1>
 
-                    <form class="text-left" method="POST" action="{{ route('login') }}">
+                    <form class="text-left" method="POST" action="/ticket">
                         @csrf
 
                         <div class="form-group col">

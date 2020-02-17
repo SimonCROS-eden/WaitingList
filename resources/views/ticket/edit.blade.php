@@ -1,52 +1,74 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    @auth
-        <h1>edit</h1>
-        <p>{{ $ticket->asker->first_name }} {{ $ticket->asker->last_name }}</p>
+<div class="container d-flex align-items-center justify-content-center">
+    <div class="row justify-content-center w-100">
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h1 class="text-primary">{{ __('Modification') }}</h1>
 
-        <form method="POST" action="/ticket/{{$ticket->id}}">
-            @csrf
-            {{method_field('PATCH')}}
-            @foreach ($ticket->tags as $tag)
-                 <p style="color: {{ $tag->color }}">{{ $tag->name }}</p>
-            @endforeach
-            <input id="title" type="text" value="{{ old('title') ? old('title') : $ticket->title }}" class="form-control @error('title') is-invalid @enderror" name="title" required autocomplete="title" placeholder="Titre ticket">
-            @error('title')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
+                    <form class="text-left" method="POST" action="/ticket/{{$ticket->id}}">
+                        @csrf
+                        @method('PATCH')
 
-            <textarea id="desc" name="desc" class="form-control @error('desc') is-invalid @enderror" rows="5" cols="33" placeholder="Description">{{ old('desc') ? old('desc') : $ticket->desc }}</textarea>
-            @error('desc')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-            
-            <div class="nav-item dropdown">
-                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    choisissez vos tags :
-                    <span class="caret"></span>
-                </a>
+                        <div class="form-group col">
+                            <label for="title" class="col-md-4 px-3 col-form-label">{{ __('Titre ticket') }}</label>
 
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    
-                    @foreach ($allTags as $oneTag)
-                        <div>
-                            <label for="tag-{{ $oneTag->name }}">{{ $oneTag->name }}</label>
-                            <input type="checkbox" id="tag-{{ $oneTag->name }}" name="tag-{{ $oneTag->name }}" value="{{ $oneTag->id }}" {{ in_array($oneTag->id, $ticket->tags->pluck("id")->toArray()) == 1 ? 'checked' : "" }}>
+                            <div>
+                                <input id="title" type="text" value="{{ old('title') ? old('title') : $ticket->title }}" class="form-control @error('title') is-invalid @enderror" name="title" required autocomplete="title" placeholder="Titre ticket">
+                                @error('title')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
-                    @endforeach
+
+                        <div class="form-group col">
+                            <label for="desc" class="col-md-4 px-3 col-form-label">{{ __('Description ticket') }}</label>
+
+                            <div>
+                                <textarea id="desc" name="desc" class="form-control @error('desc') is-invalid @enderror" rows="5" cols="33" placeholder="Description">{{ old('desc') ? old('desc') : $ticket->desc }}</textarea>
+                                @error('desc')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group col">
+                            @foreach ($ticket->tags as $tag)
+                                <p style="background-color: {{ $tag->color }}" class="rounded-pill d-inline mr-1 mb-1 py-1 px-3 text-white">{{ $tag->name }}</p>
+                            @endforeach
+                        </div>
+
+                        <div class="dropdown col mb-4">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                choisissez vos tags :
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                @foreach ($allTags as $oneTag)
+                                    <div class="dropdown-item">
+                                        <label for="tag-{{ $oneTag->name }}">{{ $oneTag->name }}</label>
+                                        <input type="checkbox" id="tag-{{ $oneTag->name }}" name="tag-{{ $oneTag->name }}" value="{{ $oneTag->id }}" {{ in_array($oneTag->id, $ticket->tags->pluck("id")->toArray()) == 1 ? 'checked' : "" }}>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        
+                        <div class="col">
+                            <div class="form-group row m-0 justify-content-between">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Modifier') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-
-            <button type="submit" class="btn btn-primary">
-                Edit
-            </button>
-        </form>
-    @endauth
+        </div>
+    </div>
 </div>
 @endsection
