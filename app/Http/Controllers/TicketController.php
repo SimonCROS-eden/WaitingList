@@ -70,7 +70,7 @@ class TicketController extends Controller
         }
         $ticket->tags()->attach($tags);
 
-        broadcast(new TicketEvent([$ticket]));
+        broadcast(new TicketEvent($ticket));
 
         return redirect()->route('dashboard');
     }
@@ -124,7 +124,7 @@ class TicketController extends Controller
         $ticket->tags()->detach();
         $ticket->tags()->attach($tags);
 
-        broadcast(new TicketEvent([$ticket]));
+        broadcast(new TicketEvent($ticket));
 
         return redirect()->route('dashboard');
     }
@@ -140,7 +140,7 @@ class TicketController extends Controller
             $ticket->helper()->associate(Auth::user());
             $ticket->save();
         }
-        broadcast(new TicketEvent([$ticket]));
+        broadcast(new TicketEvent($ticket));
 
         return redirect()->route('dashboard');
     }
@@ -151,7 +151,7 @@ class TicketController extends Controller
         $ticket->helper()->dissociate();
         $ticket->save();
 
-        broadcast(new TicketEvent([$ticket]));
+        broadcast(new TicketEvent($ticket));
 
         return redirect()->route('dashboard');
     }
@@ -175,7 +175,7 @@ class TicketController extends Controller
         $userHelp->scoreHelp = $scoreHelper + $morePoint;
         $userHelp->save();
 
-        broadcast(new TicketEvent([], [$ticket]));
+        broadcast(new TicketEvent(null, $ticket));
 
         $ticket->delete();
 
@@ -207,6 +207,13 @@ class TicketController extends Controller
                 "first_name" => $ticket->helper->first_name,
                 "last_name" => $ticket->helper->last_name,
             ] : null;
+            $tags = [];
+            foreach ($ticket->tags as $tag) {
+                $tags[] = [
+                    "name" => $tag->name,
+                    "color" => $tag->color
+                ];
+            }
             $update[] = [
                 "id" => $ticket->id,
                 "title" => $ticket->title,
@@ -220,6 +227,7 @@ class TicketController extends Controller
                     "last_name" => $ticket->asker->last_name,
                 ],
                 "helper" => $helper,
+                "tags" => $tags
             ];
         }
         header('Content-Type: application/json');

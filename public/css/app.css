@@ -10884,10 +10884,6 @@ a.text-dark:focus {
   }
 }
 
-<<<<<<< HEAD
-nav {
-  background: linear-gradient(90deg, #3490dc, #6c757d);
-=======
 pre {
   color: #50545E;
 }
@@ -10896,6 +10892,5 @@ html,
 body,
 #app {
   height: 100%;
->>>>>>> e8d32769420f1e782cd173e930d02bf3c8868692
 }
 

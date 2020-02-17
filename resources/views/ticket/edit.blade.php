@@ -10,7 +10,7 @@
             @csrf
             {{method_field('PATCH')}}
             @foreach ($ticket->tags as $tag)
-                <p>{{ $tag->name }}</p>
+                 <p style="color: {{ $tag->color }}">{{ $tag->name }}</p>
             @endforeach
             <input id="title" type="text" value="{{ old('title') ? old('title') : $ticket->title }}" class="form-control @error('title') is-invalid @enderror" name="title" required autocomplete="title" placeholder="Titre ticket">
             @error('title')
