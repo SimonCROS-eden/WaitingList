@@ -21,6 +21,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -28,72 +29,9 @@
 <body>
     <div id="app" class="d-flex flex-column">
         @include('partials.navbar')
-
-<<<<<<< HEAD
         <main class="flex-fill d-flex py-4">
-=======
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li>
-                                <a href="{{ route('ticket.create') }}">Create</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('tag.index') }}">Tag</a>
-                            </li>
-                            @if (Auth::user()->isAdmin())
-                                <li>
-                                    <a href="{{ route('tag.index') }}">Tag</a>
-                                </li>
-                            @endif
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->fullName()}} 
-                                    <span>{{ Auth::user()->scoreHelp }}</span> 
-                                    @if (Auth::user()->isAdmin())
-                                        <span>{{ Auth::user()->nbAsk }}</span> 
-                                    @endif
-                                    <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <main class="py-4">
->>>>>>> afaa43842e51f47f3d5e85fbf396a9148c50505d
             @auth
-                <ul class="list-group w-25">
+                <ul class="list-group w-25 d-none d-md-block">
                     @foreach ($users as $user)
                         <li class="list-group-item">
                             <user name="{{ $user->fullName() }}" score="{{ $user->scoreHelp }}" ask="{{ $user->nbAsk }}" admin="{{ Auth::user()->isAdmin() }}"></user>

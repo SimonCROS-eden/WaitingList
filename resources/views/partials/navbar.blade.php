@@ -32,10 +32,15 @@
                     @endif
                 @else
                     <li>
-                        <a class="btn btn-secondary" href="/ticket/create">Créer un ticket</a>
+                        <a class="btn btn-primary" href="/ticket/create">Créer un ticket</a>
                     </li>
+                    @if (Auth::user()->isAdmin())
+                        <li>
+                            <a class="ml-2 btn btn-primary" href="{{ route('tag.index') }}">Tags</a>
+                        </li>
+                    @endif
                     <li>
-                        <a class="ml-2 btn btn-secondary" href="{{ route('logout') }}"
+                        <a class="ml-2 btn btn-primary" href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>

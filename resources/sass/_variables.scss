@@ -2,7 +2,8 @@
 $body-bg: #f8fafc;
 
 // Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
+$font-family-base: 'Montserrat', sans-serif;
+$font-family-seconday: 'Raleway', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
@@ -26,8 +27,8 @@ $gray: #50545E;
 $body-bg: $white;
 $body-color: $black;
 $theme-colors: (
-    primary: $yellow,
-    secondary: $orange,
+    primary: $orange,
+    secondary: $yellow,
     light: $white,
     dark: $black
 );

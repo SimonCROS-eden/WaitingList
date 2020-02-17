@@ -1,5 +1,6 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500|Raleway:400,400i,500&display=swap');
 
 // Variables
 @import 'variables';
@@ -9,9 +10,13 @@
 
 pre {
     color: $gray;
+    font-family: $font-family-seconday;
+}
+
+.arrows {
+    font-family: 'Nunito', 'sans-serif';
 }
 
 html, body, #app {
     height: 100%;
 }
-
