@@ -17,6 +17,10 @@
     <!-- Scripts -->
     <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
+    @auth
+        <script src="{{ asset('js/live.js') }}" defer></script>
+    @endauth
+    
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
