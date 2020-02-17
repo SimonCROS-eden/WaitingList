@@ -16,10 +16,8 @@ window.Vue = require('vue');
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+const files = require.context('./', true, /\.vue$/i)
+files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,6 +27,36 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    data: {
+        tickets: []
+    },
+    methods: {
+        addTicket(data) {
+            this.tickets.unshift(data);
+        },
+        updateTicket(data) {
+            for (let ticket of this.tickets) {
+                if (ticket.id == data.id) {                    
+                    Vue.set(this.tickets, this.tickets.indexOf(ticket), data);
+                    return;
+                }
+            }
+            this.addTicket(data);
+        },
+        removeTicket(id) {
+            for (let ticket of this.tickets) {
+                if (ticket.id == id) {
+                    this.$delete(this.tickets, this.tickets.indexOf(ticket));
+                    return;
+                }
+            }
+        }
+    }
+});
+
+$(".tags").click(function () {
+    $(this).toggle();
+    $(this).siblings().toggle();
 });
 
 $(".tags").click(function () {
@@ -39,6 +67,7 @@ $(".tags").click(function () {
 require('./bootstrap');
 
 import Echo from 'laravel-echo';
+import Axios from 'axios';
 
 window.Echo = new Echo({
     broadcaster: 'socket.io',
@@ -47,52 +76,15 @@ window.Echo = new Echo({
 
 let section = $("#tickets");
 window.Echo.channel("waitinglist_database_ticket")
-.listen("TicketEvent", (data) => {    
-    for (let ticket of data.update) {
-        let div = $("<div></div>");
-        div.append("<hr />");
-        div.attr("data-id", ticket.id);
-        {
-            let user = $("<p></p>");
-            user.text(ticket.user);
-            div.append(user);
-        }
-        {
-            let title = $("<h2></h2>");
-            {
-                let a = $("<a></a>");
-                a.attr('href', "/ticket/" + ticket.id + "/");
-                a.text(ticket.title);
-                title.append(a);
-            }
-            div.append(title);
-        }
-        {
-            let description = $("<pre></pre>");
-            description.text(ticket.description);
-            div.append(description);
-        }
-        {
-            let take = $("<button>/button>");
-            take.text("Prendre");
-            div.append(take);
-        }
-
-        let old = section.find('[data-id="'+ticket.id+'"]');
-        
-        if (old.length) {
-            old.replaceWith(div);
-        } else {
-            section.prepend(div);
-        }
+.listen("TicketEvent", (data) => {
+    if (data.update) {
+        app.updateTicket(data.update);
     }
-    for (let ticket of data.remove) {
-        let old = section.find('[data-id="'+ticket.id+'"]');
-        
-        if (old.length) {
-            old.remove();
-        }
+    if (data.remove) {
+        app.removeTicket(data.remove);
     }
 });
 
-$.get("/connect");
+axios.post("/data", {}).then(function (response) {
+    app.tickets = response.data;
+});

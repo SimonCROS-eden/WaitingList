@@ -14,28 +14,46 @@ class TicketEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $update = [];
-    public $remove = [];
+    public $update = null;
+    public $remove = null;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($update, $remove = [])
+    public function __construct($update, $remove = null)
     {
-        foreach ($update as $ticket) {
-            $this->update[] = [
-                "id" => $ticket->id,
-                "title" => $ticket->title,
-                "user" => $ticket->asker->first_name . " " . $ticket->asker->last_name,
-                "description" => $ticket->desc
+        if ($update) {
+            $helper = $update->helper ? [
+                "first_name" => $update->helper->first_name,
+                "last_name" => $update->helper->last_name,
+            ] : null;
+            $tags = [];
+            foreach ($update->tags as $tag) {
+                $tags[] = [
+                    "name" => $tag->name,
+                    "color" => $tag->color
+                ];
+            }
+            $this->update = [
+                "id" => $update->id,
+                "title" => $update->title,
+                "desc" => $update->desc,
+                "ask_id" => $update->ask_id,
+                "help_id" => $update->help_id,
+                "update_take" => $update->updateTake(),
+                "update_take_maker" => $update->updateTakeMaker(),
+                "asker" => [
+                    "first_name" => $update->asker->first_name,
+                    "last_name" => $update->asker->last_name,
+                ],
+                "helper" => $helper,
+                "tags" => $tags
             ];
         }
-        foreach ($remove as $ticket) {
-            $this->remove[] = [
-                "id" => $ticket->id
-            ];
+        if ($remove) {
+            $this->remove = $remove->id;
         }
     }
 

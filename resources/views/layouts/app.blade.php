@@ -4,6 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    @auth
+        <meta name="id" content="{{ Auth::user()->id }}">
+        <meta name="admin" content="{{ Auth::user()->admin }}">
+    @endauth
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -52,8 +57,16 @@
                             @endif
                         @else
                             <li>
-                                <a href="/ticket/create">Create</a>
+                                <a href="{{ route('ticket.create') }}">Create</a>
                             </li>
+                            <li>
+                                <a href="{{ route('tag.index') }}">Tag</a>
+                            </li>
+                            @if (Auth::user()->isAdmin())
+                                <li>
+                                    <a href="{{ route('tag.index') }}">Tag</a>
+                                </li>
+                            @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->fullName()}} 
