@@ -53,7 +53,7 @@ class TicketEvent implements ShouldBroadcast
             ];
         }
         if ($remove) {
-            $this->remove = $update->id;
+            $this->remove = $remove->id;
         }
     }
 
