@@ -21,6 +21,7 @@ $cyan: #6cb2eb;
 $white: #fafcfc;
 $black: #10161f;
 $gray: #50545E;
+$light-gray: #c5c7ce;
 
 
 // Theming
@@ -30,5 +31,7 @@ $theme-colors: (
     primary: $orange,
     secondary: $yellow,
     light: $white,
-    dark: $black
+    dark: $black,
+    gray: $gray,
+    light-gray: $light-gray
 );

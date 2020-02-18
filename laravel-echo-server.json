@@ -1,5 +1,5 @@
 {
-	"authHost": "http://localhost",
+	"authHost": "http://localhost:3000",
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [
 		{
@@ -9,7 +9,9 @@
 	],
 	"database": "redis",
 	"databaseConfig": {
-		"redis": {},
+		"redis": {
+			"keyPrefix": ""
+		},
 		"sqlite": {
 			"databasePath": "/database/laravel-echo-server.sqlite"
 		}
