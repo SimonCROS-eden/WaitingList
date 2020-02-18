@@ -1,5 +1,6 @@
 import Echo from 'laravel-echo';
 import Axios from 'axios';
+import Push from 'push.js';
 
 var changes = 0;
 var blured = false;
@@ -9,6 +10,12 @@ var blured = false;
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+
+Push.Permission.request(() => {
+    console.log("Notifications activées");
+}, () => {
+    console.log("Notifications désactivées");
+});
 
 const app = new Vue({
     el: '#app',
@@ -24,8 +31,19 @@ const app = new Vue({
     methods: {
         addTicket(data) {
             this.tickets.unshift(data);
-            changes++;
-            document.title = "(" + changes + ") WaitingList";
+            if (blured) {
+                changes++;
+                document.title = "(" + changes + ") WaitingList";
+                Push.create(data.title, {
+                    body: data.asker.first_name + " " + data.asker.last_name,
+                    icon: '/images/icon.svg',
+                    timeout: 5000,
+                    onClick: function () {
+                        window.focus();
+                        this.close();
+                    }
+                });
+            }
         },
         updateTicket(data) {
             for (let ticket of this.tickets) {
@@ -100,10 +118,10 @@ if (document.querySelector('meta[name="admin"]').getAttribute('content') != 0) {
 
 $(window).focus(function() {
     document.title = "WaitingList";
-    blured = true;
+    blured = false;
     changes = 0;
 });
 
 $(window).blur(function() {
-    blured = false;
+    blured = true;
 });
