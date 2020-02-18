@@ -12,7 +12,7 @@
                         @csrf
 
                         <div class="form-group col mb-2">
-                            <label for="first_name" class="col-md-6 px-3 col-form-label">{{ __('Prénom') }}</label>
+                            <label for="first_name" class="col-md-12 px-3 col-form-label">{{ __('Prénom') }}</label>
 
                             <div>
                                 <input id="first_name" type="first_name" class="form-control px-3 @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="name" autofocus placeholder="Prénom">
@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="form-group col mb-2">
-                            <label for="last_name" class="col-md-6 px-3 col-form-label">{{ __('Nom') }}</label>
+                            <label for="last_name" class="col-md-12 px-3 col-form-label">{{ __('Nom') }}</label>
 
                             <div>
                                 <input id="last_name" type="last_name" class="form-control px-3 @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="name" autofocus placeholder="Nom">
@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="form-group col mb-2">
-                            <label for="email" class="col-md-6 px-3 col-form-label">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-md-12 px-3 col-form-label">{{ __('E-Mail Address') }}</label>
 
                             <div>
                                 <input id="email" type="email" class="form-control px-3 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email">
@@ -54,10 +54,10 @@
                         </div>
 
                         <div class="form-group col mb-2">
-                            <label for="password" class="col-md-6 px-3 col-form-label">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-12 px-3 col-form-label">{{ __('Mot de passe') }}</label>
 
                             <div>
-                                <input id="password" type="password" class="form-control px-3 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">
+                                <input id="password" type="password" class="form-control px-3 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Mot de passe">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -68,10 +68,10 @@
                         </div>
 
                         <div class="form-group col mb-2">
-                            <label for="password-confirm" class="col-md-6 px-3 col-form-label">{{ __('Password-confirm') }}</label>
+                            <label for="password-confirm" class="col-md-12 px-3 col-form-label">{{ __('Confirmation du mot de passe') }}</label>
 
                             <div>
-                                <input id="password-confirm" type="password-confirm" class="form-control px-3 @error('password-confirm') is-invalid @enderror" name="password-confirm" required autocomplete="new-password" placeholder="Password-confirm">
+                                <input id="password-confirm" type="password" class="form-control px-3 @error('password-confirm') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password" placeholder="Confirmation du mot de passe">
 
                                 @error('password-confirm')
                                     <span class="invalid-feedback" role="alert">
