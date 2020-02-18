@@ -25,6 +25,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -32,10 +33,9 @@
 <body>
     <div id="app" class="d-flex flex-column">
         @include('partials.navbar')
-
         <main class="flex-fill d-flex py-4">
             @auth
-                <ul class="list-group w-25">
+                <ul class="list-group w-25 d-none d-md-block">
                     <li v-for="(user,index) in users" class="list-group-item">
                         <user :user="user" :key="index"></user>
                     </li>

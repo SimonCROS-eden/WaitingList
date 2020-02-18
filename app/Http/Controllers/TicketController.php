@@ -201,7 +201,7 @@ class TicketController extends Controller
     {
         $this->authorize('delete', $ticket);
 
-        broadcast(new TicketEvent([], [$ticket]));
+        broadcast(new TicketEvent(null, $ticket));
 
         $ticket->delete();
 
