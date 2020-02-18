@@ -10,10 +10,10 @@
                 <div class="flex">
                     <div v-for="(tag, index) in ticket.tags" :key="index" :style="'background-color: ' + tag.color" class="badge mb-2 mr-1 py-2 px-3 text-white">{{ tag.name }}</div>
                 </div>
-                
+                <p class="text-primary mt-2 h5" v-if="ticket.helper && !update_take()">
+                    {{ ticket.ask_id === ticket.help_id ? "Le ticket est mit en pause ..." : "Pris par : " + ticket.helper.first_name + " " + ticket.helper.last_name }}
+                </p>
             </div>
-            
-            
             <div class="d-flex flex-row mt-2 mt-md-0">
                 <div class="d-flex flex-wrap flex-row flex-md-row-reverse">
                     <form class="mr-2 mr-md-0 ml-md-2" @submit.prevent="onSubmit" v-if="((!ticket.helper || update_take()) && isOwner()) || admin == 1" :action="'/ticket/' + ticket.id" method="post">
@@ -23,7 +23,7 @@
                             Supprimer
                         </button>
                     </form>
-                    <template v-else-if="isOwner()">
+                    <template v-if="ticket.helper && !update_take() && isOwner()">
                         <form class="" @submit.prevent="onSubmit" :action="'/ticket/' + ticket.id + '/end'" method="post">
                             <input type="hidden" name="_token" :value="csrf">
                             <button class="btn btn-primary" type="submit">
@@ -47,11 +47,6 @@
                         <button class="btn btn-primary" v-else-if="update_take()" type="submit">
                             {{ update_take_maker() ? 'Continuer' : 'Abandonner' }}
                         </button>
-                        <template v-else>
-                            <p class="text-primary mt-2 h5">
-                                {{ ticket.ask_id === ticket.help_id ? "Le ticket est mit en pause ..." : "Pris par : " + ticket.helper.first_name + " " + ticket.helper.last_name }}
-                            </p>
-                        </template>
                     </form>
                 </div>
             </div>
