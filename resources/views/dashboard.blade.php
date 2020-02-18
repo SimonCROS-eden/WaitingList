@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container w-75">
     <section id="tickets" ref="tickets">
         <ticket v-for="(ticket,index) in tickets" :ticket="ticket" :key="index"></ticket>
     </section>

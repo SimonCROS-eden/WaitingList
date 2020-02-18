@@ -18,6 +18,11 @@ class Ticket extends Model
         'title', 'desc'
     ];
 
+    public function shortDesc()
+    {
+        return substr($this->desc,0,100).(strlen($this->desc) > 100 ? ". . ." : "");
+    }
+
     public function asker()
     {
         return $this->belongsTo('App\User', 'ask_id');
