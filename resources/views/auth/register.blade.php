@@ -68,10 +68,10 @@
                         </div>
 
                         <div class="form-group col mb-2">
-                            <label for="password-confirm" class="col-md-6 px-3 col-form-label">{{ __('Password-confirm') }}</label>
+                            <label for="password-confirm" class="col-md-6 px-3 col-form-label">{{ __('password-confirm') }}</label>
 
                             <div>
-                                <input id="password-confirm" type="password-confirm" class="form-control px-3 @error('password-confirm') is-invalid @enderror" name="password-confirm" required autocomplete="new-password" placeholder="Password-confirm">
+                                <input id="password-confirm" type="password" class="form-control px-3 @error('password-confirm') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password" placeholder="password-confirm">
 
                                 @error('password-confirm')
                                     <span class="invalid-feedback" role="alert">
