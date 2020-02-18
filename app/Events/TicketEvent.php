@@ -44,6 +44,7 @@ class TicketEvent implements ShouldBroadcast
                 "help_id" => $update->help_id,
                 "update_take" => $update->updateTake(),
                 "update_take_maker" => $update->updateTakeMaker(),
+                "shortDesc" => $update->shortDesc(),
                 "asker" => [
                     "first_name" => $update->asker->first_name,
                     "last_name" => $update->asker->last_name,

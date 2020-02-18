@@ -10884,13 +10884,19 @@ a.text-dark:focus {
   }
 }
 
-pre {
-  color: #50545E;
-  font-family: "Raleway", sans-serif;
-}
-
 .arrows {
   font-family: "Nunito", "sans-serif";
+}
+
+.text {
+  color: #50545E;
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+  font-size: 1.2em;
+}
+
+.bg-muted {
+  background: #f0f0f0;
 }
 
 html,

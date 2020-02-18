@@ -8,13 +8,19 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-pre {
-    color: $gray;
-    font-family: $font-family-seconday;
-}
-
 .arrows {
     font-family: 'Nunito', 'sans-serif';
+}
+
+.text {
+    color: $gray;
+    font-family: $font-family-seconday;
+    font-weight: 400;
+    font-size: 1.2em;
+}
+
+.bg-muted {
+    background: #f0f0f0;
 }
 
 html, body, #app {

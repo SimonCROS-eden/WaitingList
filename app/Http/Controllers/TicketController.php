@@ -222,6 +222,7 @@ class TicketController extends Controller
                 "help_id" => $ticket->help_id,
                 "update_take" => $ticket->updateTake(),
                 "update_take_maker" => $ticket->updateTakeMaker(),
+                "shortDesc" => $ticket->shortDesc(),
                 "asker" => [
                     "first_name" => $ticket->asker->first_name,
                     "last_name" => $ticket->asker->last_name,
