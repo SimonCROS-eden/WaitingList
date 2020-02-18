@@ -14,7 +14,8 @@
                         @endforeach
                     </div>
 
-                    <p>{{ $ticket->desc }}</p>
+                    <hr />
+                    <pre class="text">{{ $ticket->desc }}</pre>
 
                     <div class="col">
                         <div class="row">

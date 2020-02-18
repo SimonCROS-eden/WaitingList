@@ -60,9 +60,10 @@ class TicketController extends Controller
         $ticket->asker()->associate(Auth::user());
         $ticket->save();
 
-        $userAsk = User::find(Auth::user()->id);
-        $userAsk->nbAsk = Auth::user()->nbAsk + 1;
-        $userAsk->save();
+        $lessPoint = 2;
+        Auth::user()->nbAsk += 1;
+        Auth::user()->scoreHelp -= $lessPoint;
+        Auth::user()->save();
 
         $tags = [];
         foreach ($request->all() as $field => $input) {
@@ -167,14 +168,9 @@ class TicketController extends Controller
         $this->authorize('delete', $ticket);
 
         $morePoint = 10;
-        $lessPoint = 2;
 
         $scoreAsker = $ticket->asker->scoreHelp;
         $scoreHelper = $ticket->helper->scoreHelp;
-
-        $userAsk = User::find($ticket->asker->id);
-        $userAsk->scoreHelp = $scoreAsker - $lessPoint;
-        $userAsk->save();
 
         $userHelp = User::find($ticket->helper->id);
         $userHelp->scoreHelp = $scoreHelper + $morePoint;
@@ -182,8 +178,8 @@ class TicketController extends Controller
 
         broadcast(new TicketEvent(null, $ticket));
 
-        broadcast(new AdminUserEvent(Auth::user()));
-        broadcast(new UserEvent(Auth::user()));
+        broadcast(new AdminUserEvent($userHelp));
+        broadcast(new UserEvent($userHelp));
 
         $ticket->delete();
 

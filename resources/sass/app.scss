@@ -8,6 +8,10 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+html, body, #app {
+    min-height: 100%;
+}
+
 .ticket-transition {
     transition: 0.2s;
 }
@@ -23,7 +27,7 @@
 }
 
 .bg-muted {
-    background: rgba(108, 117, 125, 0.05);
+    background: rgba(77, 92, 105, 0.05);
 }
 
 .bg-taken {
@@ -32,8 +36,4 @@
 
 .ticket-username {
     border-left-width: 3px !important;
-}
-
-html, body, #app {
-    height: 100%;
 }

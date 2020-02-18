@@ -70,6 +70,7 @@ class Ticket extends Model
             "id" => $this->id,
             "title" => $this->title,
             "desc" => $this->desc,
+            "shortDesc" => $this->shortDesc(),
             "ask_id" => $this->ask_id,
             "help_id" => $this->help_id,
             "update_take" => $this->updateTake(),

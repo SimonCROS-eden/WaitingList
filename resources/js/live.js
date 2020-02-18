@@ -1,6 +1,9 @@
 import Echo from 'laravel-echo';
 import Axios from 'axios';
 
+var changes = 0;
+var blured = false;
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -13,9 +16,16 @@ const app = new Vue({
         tickets: [],
         users: []
     },
+    computed: {
+        orderedUsers: function () {
+            return _.orderBy(this.users, 'score', 'desc');
+        }
+    },
     methods: {
         addTicket(data) {
             this.tickets.unshift(data);
+            changes++;
+            document.title = "(" + changes + ") WaitingList";
         },
         updateTicket(data) {
             for (let ticket of this.tickets) {
@@ -38,7 +48,7 @@ const app = new Vue({
             this.users.unshift(data);
         },
         updateUser(data) {
-            for (let user of this.users) {
+            for (let user of this.users) {                
                 if (user.id == data.id) {                    
                     Vue.set(this.users, this.users.indexOf(user), data);
                     return;
@@ -59,7 +69,6 @@ window.Echo = new Echo({
     host: window.location.hostname + ':6001',
     csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 });
-
 let section = $("#tickets");
 
 window.Echo.channel("ticket")
@@ -77,9 +86,9 @@ axios.post("/data", {}).then(function (response) {
     app.users = response.data.users;
 });
 
-if (document.querySelector('meta[name="admin"]').getAttribute('content')) {
+if (document.querySelector('meta[name="admin"]').getAttribute('content') != 0) {
     window.Echo.private("user.admin")
-    .listen("AdminUserEvent", (data) => {
+    .listen("AdminUserEvent", (data) => {             
         app.updateUser(data.user);
     });
 } else {
@@ -88,3 +97,13 @@ if (document.querySelector('meta[name="admin"]').getAttribute('content')) {
         app.updateUser(data.user);
     });
 }
+
+$(window).focus(function() {
+    document.title = "WaitingList";
+    blured = true;
+    changes = 0;
+});
+
+$(window).blur(function() {
+    blured = false;
+});

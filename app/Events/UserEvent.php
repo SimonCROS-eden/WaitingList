@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UserEvent
+class UserEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -23,7 +23,7 @@ class UserEvent
      */
     public function __construct($user)
     {
-        $this->$user = $user->serialize(false);
+        $this->user = $user->serialize(false);
     }
 
     /**
