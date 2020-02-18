@@ -17,6 +17,10 @@
     <!-- Scripts -->
     <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
+    @auth
+        <script src="{{ asset('js/live.js') }}" defer></script>
+    @endauth
+    
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -31,12 +35,10 @@
         @include('partials.navbar')
         <main class="flex-fill d-flex py-4">
             @auth
-                <ul class="list-group w-25 d-none d-md-block">
-                    @foreach ($users as $user)
-                        <li class="list-group-item">
-                            <user name="{{ $user->fullName() }}" score="{{ $user->scoreHelp }}" ask="{{ $user->nbAsk }}" admin="{{ Auth::user()->isAdmin() }}"></user>
-                        </li>
-                    @endforeach
+                <ul class="list-group w-25 d-none d-lg-block">
+                    <li v-for="(user,index) in orderedUsers" class="list-group-item">
+                        <user :user="user" :key="index"></user>
+                    </li>
                 </ul>
             @endauth
             @yield('content')

@@ -45,4 +45,19 @@ class User extends Authenticatable
     {
         return $this->first_name." ".$this->last_name;
     }
+
+    public function serialize($admin)
+    {
+        $seralized = [
+            "id" => $this->id,
+            "name" => $this->fullName(),
+            "score" => $this->scoreHelp
+        ];
+
+        if ($admin) {
+            $seralized["ask"] = $this->nbAsk;
+        }
+
+        return $seralized;
+    }
 }

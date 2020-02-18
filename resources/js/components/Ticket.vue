@@ -16,7 +16,7 @@
             
             <div class="d-flex flex-row mt-2 mt-md-0">
                 <div class="d-flex flex-wrap flex-row flex-md-row-reverse">
-                    <form class="mr-2 mr-md-0 ml-md-2" @submit.prevent="onSubmit" v-if="(!ticket.helper || update_take()) && isOwner()" :action="'/ticket/' + ticket.id" method="post">
+                    <form class="mr-2 mr-md-0 ml-md-2" @submit.prevent="onSubmit" v-if="((!ticket.helper || update_take()) && isOwner()) || admin == 1" :action="'/ticket/' + ticket.id" method="post">
                         <input type="hidden" name="_token" :value="csrf">
                         <input type="hidden" name="_method" value="DELETE">
                         <button class="btn btn-primary" type="submit">
@@ -70,7 +70,7 @@
             id: document.querySelector('meta[name="id"]').getAttribute('content'),
         }),
         methods: {
-            update_take() {                                
+            update_take() {           
                 return this.id == this.ticket.help_id || !this.admin;
             },
             update_take_maker() {
@@ -85,6 +85,6 @@
             onSubmit: function(e) {
                 axios.post(e.target.action, $(e.target).serialize())
             }
-        },
+        }
     }
 </script>
