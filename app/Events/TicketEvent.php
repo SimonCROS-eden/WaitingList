@@ -25,37 +25,7 @@ class TicketEvent implements ShouldBroadcast
     public function __construct($update, $remove = null)
     {
         if ($update) {
-<<<<<<< HEAD
             $this->update = $update->serialize();
-=======
-            $helper = $update->helper ? [
-                "first_name" => $update->helper->first_name,
-                "last_name" => $update->helper->last_name,
-            ] : null;
-            $tags = [];
-            foreach ($update->tags as $tag) {
-                $tags[] = [
-                    "name" => $tag->name,
-                    "color" => $tag->color
-                ];
-            }
-            $this->update = [
-                "id" => $update->id,
-                "title" => $update->title,
-                "desc" => $update->desc,
-                "ask_id" => $update->ask_id,
-                "help_id" => $update->help_id,
-                "update_take" => $update->updateTake(),
-                "update_take_maker" => $update->updateTakeMaker(),
-                "shortDesc" => $update->shortDesc(),
-                "asker" => [
-                    "first_name" => $update->asker->first_name,
-                    "last_name" => $update->asker->last_name,
-                ],
-                "helper" => $helper,
-                "tags" => $tags
-            ];
->>>>>>> c49b831ac4acf11fac55ebc1c449d3f53f423de3
         }
         if ($remove) {
             $this->remove = $remove->id;
