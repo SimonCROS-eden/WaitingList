@@ -12,6 +12,8 @@ use App\TicketTag;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreTicket;
 use App\Events\TicketEvent;
+use App\Events\AdminUserEvent;
+use App\Events\UserEvent;
 
 
 class TicketController extends Controller
@@ -71,6 +73,9 @@ class TicketController extends Controller
         $ticket->tags()->attach($tags);
 
         broadcast(new TicketEvent($ticket));
+
+        broadcast(new AdminUserEvent(Auth::user()));
+        broadcast(new UserEvent(Auth::user()));
 
         return redirect()->route('dashboard');
     }
@@ -177,6 +182,9 @@ class TicketController extends Controller
 
         broadcast(new TicketEvent(null, $ticket));
 
+        broadcast(new AdminUserEvent(Auth::user()));
+        broadcast(new UserEvent(Auth::user()));
+
         $ticket->delete();
 
         return redirect()->route('dashboard');
@@ -202,33 +210,13 @@ class TicketController extends Controller
 
     public function data() {
         $update = [];
+        $update["tickets"] = [];
+        $update["users"] = [];
         foreach (Ticket::orderBy('created_at', 'DESC')->get() as $ticket) {
-            $helper = $ticket->helper ? [
-                "first_name" => $ticket->helper->first_name,
-                "last_name" => $ticket->helper->last_name,
-            ] : null;
-            $tags = [];
-            foreach ($ticket->tags as $tag) {
-                $tags[] = [
-                    "name" => $tag->name,
-                    "color" => $tag->color
-                ];
-            }
-            $update[] = [
-                "id" => $ticket->id,
-                "title" => $ticket->title,
-                "desc" => $ticket->desc,
-                "ask_id" => $ticket->ask_id,
-                "help_id" => $ticket->help_id,
-                "update_take" => $ticket->updateTake(),
-                "update_take_maker" => $ticket->updateTakeMaker(),
-                "asker" => [
-                    "first_name" => $ticket->asker->first_name,
-                    "last_name" => $ticket->asker->last_name,
-                ],
-                "helper" => $helper,
-                "tags" => $tags
-            ];
+            $update["tickets"][] = $ticket->serialize();
+        }
+        foreach (User::all() as $user) {
+            $update["users"][] = $user->serialize(Auth::user()->isAdmin());
         }
         header('Content-Type: application/json');
         echo json_encode($update);

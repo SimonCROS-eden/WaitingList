@@ -47,4 +47,34 @@ class Ticket extends Model
     {
         return Auth::user()->can('updateTakeMaker', $this);
     }
+
+    public function serialize()
+    {
+        $helper = $this->helper ? [
+            "first_name" => $this->helper->first_name,
+            "last_name" => $this->helper->last_name,
+        ] : null;
+        $tags = [];
+        foreach ($this->tags as $tag) {
+            $tags[] = [
+                "name" => $tag->name,
+                "color" => $tag->color
+            ];
+        }
+        return [
+            "id" => $this->id,
+            "title" => $this->title,
+            "desc" => $this->desc,
+            "ask_id" => $this->ask_id,
+            "help_id" => $this->help_id,
+            "update_take" => $this->updateTake(),
+            "update_take_maker" => $this->updateTakeMaker(),
+            "asker" => [
+                "first_name" => $this->asker->first_name,
+                "last_name" => $this->asker->last_name,
+            ],
+            "helper" => $helper,
+            "tags" => $tags
+        ];
+    }
 }

@@ -36,11 +36,9 @@
         <main class="flex-fill d-flex py-4">
             @auth
                 <ul class="list-group w-25">
-                    @foreach ($users as $user)
-                        <li class="list-group-item">
-                            <user name="{{ $user->fullName() }}" score="{{ $user->scoreHelp }}" ask="{{ $user->nbAsk }}" admin="{{ Auth::user()->isAdmin() }}"></user>
-                        </li>
-                    @endforeach
+                    <li v-for="(user,index) in users" class="list-group-item">
+                        <user :user="user" :key="index"></user>
+                    </li>
                 </ul>
             @endauth
             @yield('content')

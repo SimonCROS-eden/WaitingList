@@ -73,6 +73,6 @@
             onSubmit: function(e) {
                 axios.post(e.target.action, $(e.target).serialize())
             }
-        },
+        }
     }
 </script>

@@ -10,26 +10,20 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TicketEvent implements ShouldBroadcast
+class UserEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $update = null;
-    public $remove = null;
+    public $user;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($update, $remove = null)
+    public function __construct($user)
     {
-        if ($update) {
-            $this->update = $update->serialize();
-        }
-        if ($remove) {
-            $this->remove = $update->id;
-        }
+        $this->$user = $user->serialize(false);
     }
 
     /**
@@ -39,10 +33,6 @@ class TicketEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('ticket');
-    }
-
-    public function broadcastAs() {
-        return 'ticket.update';
+        return new PrivateChannel('user.guest');
     }
 }

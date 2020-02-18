@@ -10,7 +10,8 @@ import Axios from 'axios';
 const app = new Vue({
     el: '#app',
     data: {
-        tickets: []
+        tickets: [],
+        users: []
     },
     methods: {
         addTicket(data) {
@@ -32,7 +33,19 @@ const app = new Vue({
                     return;
                 }
             }
-        }
+        },
+        addUser(data) {
+            this.users.unshift(data);
+        },
+        updateUser(data) {
+            for (let user of this.users) {
+                if (user.id == data.id) {                    
+                    Vue.set(this.users, this.users.indexOf(user), data);
+                    return;
+                }
+            }
+            this.addUser(data);
+        },
     }
 });
 
@@ -43,13 +56,14 @@ $(".tags").click(function () {
 
 window.Echo = new Echo({
     broadcaster: 'socket.io',
-    host: window.location.hostname + ':6001'
+    host: window.location.hostname + ':6001',
+    csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 });
 
 let section = $("#tickets");
 
-window.Echo.channel("waitinglist_database_ticket")
-.listen("TicketEvent", (data) => {
+window.Echo.channel("ticket")
+.listen(".ticket.update", (data) => {
     if (data.update) {
         app.updateTicket(data.update);
     }
@@ -59,5 +73,18 @@ window.Echo.channel("waitinglist_database_ticket")
 });
 
 axios.post("/data", {}).then(function (response) {
-    app.tickets = response.data;
+    app.tickets = response.data.tickets;
+    app.users = response.data.users;
 });
+
+if (document.querySelector('meta[name="admin"]').getAttribute('content')) {
+    window.Echo.private("user.admin")
+    .listen("AdminUserEvent", (data) => {
+        app.updateUser(data.user);
+    });
+} else {
+    window.Echo.private("user.guest")
+    .listen("UserEvent", (data) => {
+        app.updateUser(data.user);
+    });
+}
