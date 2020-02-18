@@ -59,11 +59,6 @@ $(".tags").click(function () {
     $(this).siblings().toggle();
 });
 
-$(".tags").click(function () {
-    $(this).toggle();
-    $(this).siblings().toggle();
-});
-
 require('./bootstrap');
 
 import Echo from 'laravel-echo';
