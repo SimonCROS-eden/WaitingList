@@ -1,0 +1,37 @@
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-base: 'Montserrat', sans-serif;
+$font-family-seconday: 'Raleway', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+// Colors
+$blue: #3490dc;
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66d9b;
+$red: #e3342f;
+$orange: #edc245;
+$yellow: #EDDE4E;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+$white: #fafcfc;
+$black: #10161f;
+$gray: #50545E;
+$light-gray: #c5c7ce;
+
+
+// Theming
+$body-bg: $white;
+$body-color: $black;
+$theme-colors: (
+    primary: $orange,
+    secondary: $yellow,
+    light: $white,
+    dark: $black,
+    gray: $gray,
+    light-gray: $light-gray
+);
