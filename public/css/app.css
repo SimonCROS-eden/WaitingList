@@ -10884,6 +10884,10 @@ a.text-dark:focus {
   }
 }
 
+.ticket-transition {
+  transition: 0.2s;
+}
+
 .arrows {
   font-family: "Nunito", "sans-serif";
 }
@@ -10896,7 +10900,15 @@ a.text-dark:focus {
 }
 
 .bg-muted {
-  background: #f0f0f0;
+  background: rgba(108, 117, 125, 0.05);
+}
+
+.bg-taken {
+  background: rgba(237, 221, 78, 0.15);
+}
+
+.ticket-username {
+  border-left-width: 3px !important;
 }
 
 html,

@@ -1,14 +1,14 @@
 <template>
     <div :data-id="ticket.id">
         
-        <div class="border-top d-flex flex-column flex-md-row justify-content-between py-4 px-2" :class="ticket.helper ? 'bg-muted' : ''">
+        <div class="ticket-transition border-top d-flex flex-column flex-md-row justify-content-between py-4 px-2" :class="isHelper() && !update_take_maker() ? 'bg-taken' : ticket.helper ? 'bg-muted' : ''">
 
             <div class="d-flex flex-column p-0 col-md-6 ">
-                <p class="mb-2 text-muted">{{ ticket.asker.first_name + " " + ticket.asker.last_name }}</p>
+                <p class="mb-2 text-muted ticket-username" :class="isOwner() ? 'border-left pl-2 border-primary' : ''">{{ ticket.asker.first_name + " " + ticket.asker.last_name }}</p>
                 <h2 class="mb-2"><a :class="ticket.helper ? 'text-muted' : ''" :href="'/ticket/' + ticket.id + '/'">{{ ticket.title }}</a></h2>
-                <p class="text">{{ ticket.shortDesc }}</p>
-                <div class="flex mb-2">
-                    <div v-for="(tag, index) in ticket.tags" :key="index" :style="'background-color: ' + tag.color" class="badge mr-1 py-2 px-3 text-white">{{ tag.name }}</div>
+                <p class="text mb-2">{{ ticket.shortDesc }}</p>
+                <div class="flex">
+                    <div v-for="(tag, index) in ticket.tags" :key="index" :style="'background-color: ' + tag.color" class="badge mb-2 mr-1 py-2 px-3 text-white">{{ tag.name }}</div>
                 </div>
                 
             </div>
@@ -78,6 +78,9 @@
             },
             isOwner() {
                 return this.id == this.ticket.ask_id;
+            },
+            isHelper() {
+                return this.id == this.ticket.help_id;
             },
             onSubmit: function(e) {
                 axios.post(e.target.action, $(e.target).serialize())
