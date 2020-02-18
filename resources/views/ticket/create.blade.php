@@ -12,7 +12,7 @@
                         @csrf
 
                         <div class="form-group col">
-                            <label for="title" class="col-md-4 px-3 col-form-label">{{ __('Titre ticket') }}</label>
+                            <label for="title" class="col-md-12 px-3 col-form-label">{{ __('Titre tiquet') }}</label>
 
                             <div>
                                 <input id="title" type="text" value="{{ old('title') }}" class="form-control @error('title') is-invalid @enderror" name="title" required autocomplete="title" placeholder="Titre">
@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="form-group col">
-                            <label for="desc" class="col-md-4 px-3 col-form-label">{{ __('Description ticket') }}</label>
+                            <label for="desc" class="col-md-12 px-3 col-form-label">{{ __('Description tiquet') }}</label>
 
                             <div>
                                 <textarea id="desc" name="desc" class="form-control @error('desc') is-invalid @enderror" rows="5" cols="33" placeholder="Description">{{ old('desc') }}</textarea>
@@ -41,7 +41,7 @@
 
                         <div class="dropdown col mb-4">
                             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                choisissez vos tags :
+                                choisissez vos étiquettes
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                 @foreach ($tags as $tag)
@@ -56,7 +56,7 @@
                         <div class="col">
                             <div class="form-group row m-0 justify-content-between">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Create') }}
+                                    {{ __('Créer') }}
                                 </button>
                             </div>
                         </div>

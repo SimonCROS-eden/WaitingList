@@ -45,7 +45,7 @@
                             {{ update_take_maker() ? 'Pause' : 'Prendre' }}
                         </button>
                         <button class="btn btn-primary" v-else-if="update_take()" type="submit">
-                            {{ update_take_maker() ? 'Continue' : 'Abandonner' }}
+                            {{ update_take_maker() ? 'Continuer' : 'Abandonner' }}
                         </button>
                         <template v-else>
                             <p class="text-primary mt-2 h5">
