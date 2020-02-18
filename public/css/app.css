@@ -10899,6 +10899,14 @@ a.text-dark:focus {
   background: #f0f0f0;
 }
 
+.bg-taken {
+  background: rgba(237, 221, 78, 0.5);
+}
+
+.ticket-username {
+  border-left-width: 3px !important;
+}
+
 html,
 body,
 #app {
