@@ -57,7 +57,7 @@ class TagController extends Controller
         $inputColor = $tag->color;
         
         $validatedData = $request->validate([
-            $inputName => 'required|min:5|max:20',
+            $inputName => 'required|min:1|max:20',
             $inputColor => 'required'
         ]);
         
