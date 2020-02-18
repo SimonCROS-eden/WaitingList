@@ -12,7 +12,7 @@
                         @csrf
 
                         <div class="form-group col">
-                            <label for="email" class="col-md-4 px-3 col-form-label">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-md-6 px-3 col-form-label">{{ __('E-Mail Address') }}</label>
 
                             <div>
                                 <input id="email" type="email" class="form-control px-3 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="form-group col">
-                            <label for="password" class="col-md-4 px-3 col-form-label">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-6 px-3 col-form-label">{{ __('Password') }}</label>
 
                             <div>
                                 <input id="password" type="password" class="form-control px-3 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
@@ -44,7 +44,7 @@
                                 <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                                 <label class="form-check-label" for="remember">
-                                    {{ __('Remember Me') }}
+                                    {{ __('Se souvenir de moi') }}
                                 </label>
                             </div>
                         </div>
