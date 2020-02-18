@@ -23,26 +23,26 @@
                 <!-- Authentication Links -->
                 @guest
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('Connexion') }}</a>
                     </li>
                     @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Inscription') }}</a>
                         </li>
                     @endif
                 @else
                     <li>
-                        <a class="btn btn-primary" href="/ticket/create">Créer un ticket</a>
+                        <a class="mt-2 mt-md-0 btn btn-primary" href="/ticket/create">Créer un tiquet</a>
                     </li>
                     @if (Auth::user()->isAdmin())
                         <li>
-                            <a class="ml-2 btn btn-primary" href="{{ route('tag.index') }}">Tags</a>
+                            <a class="ml-md-2 mt-2 mt-md-0 btn btn-primary" href="{{ route('tag.index') }}">Étiquette</a>
                         </li>
                     @endif
                     <li>
-                        <a class="ml-2 btn btn-primary" href="{{ route('logout') }}"
+                        <a class="ml-md-2 mt-2 mt-md-0 btn btn-primary" href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                            {{ __('Déconnexion') }}
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
