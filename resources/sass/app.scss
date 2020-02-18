@@ -1,5 +1,6 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500|Raleway:400,400i,500&display=swap');
 
 // Variables
 @import 'variables';
@@ -7,8 +8,30 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-pre {
+.ticket-transition {
+    transition: 0.2s;
+}
+.arrows {
+    font-family: 'Nunito', 'sans-serif';
+}
+
+.text {
     color: $gray;
+    font-family: $font-family-seconday;
+    font-weight: 400;
+    font-size: 1.2em;
+}
+
+.bg-muted {
+    background: rgba(108, 117, 125, 0.05);
+}
+
+.bg-taken {
+    background: rgba(237, 221, 78, 0.15);
+}
+
+.ticket-username {
+    border-left-width: 3px !important;
 }
 
 html, body, #app {
